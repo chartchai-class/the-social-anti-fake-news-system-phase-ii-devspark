@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: anti-fake-news-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: anti_fake_news
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: anti-fake-news-phpmyadmin
+    ports:
+      - "9000:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:

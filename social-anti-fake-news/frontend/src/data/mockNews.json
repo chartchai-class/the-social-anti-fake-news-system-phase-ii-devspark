@@ -1,0 +1,490 @@
+[
+  {
+    "id": 1,
+    "title": "Aliens Landed in Bangkok",
+    "shortDetail": "A mysterious light was seen over the Grand Palace.",
+    "fullDetail": "Multiple witnesses reported seeing a glowing object descend rapidly over the Grand Palace late in the evening. Residents described unusual movements in the sky and flashes of light that lasted several minutes. Authorities, including the Bangkok Metropolitan Police and the Civil Aviation Authority, investigated the incident and stated that there is no evidence of extraterrestrial activity. Experts suggest the phenomenon could have been caused by a combination of atmospheric reflections and drone lights. Social media posts claiming alien landings quickly went viral, sparking debates online and attracting curiosity seekers to the area.",
+    "reporter": "John Doe",
+    "dateTime": "2025-08-20T14:30:00",
+    "status": "fake",
+    "image": "/images/image1.jpg",
+    "votes": { "fake": 12, "notFake": 3 },
+    "comments": [
+      { "user": "Jane", "text": "Looks photoshopped!", "imageUrl": "", "vote": "fake" },
+      { "user": "Somchai", "text": "I was nearby, nothing happened.", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Bangkok Floods Reach New Record",
+    "shortDetail": "The Chao Phraya River has overflowed.",
+    "fullDetail": "Heavy rainfall over the past week has caused the Chao Phraya River to overflow, leading to widespread flooding in several Bangkok suburbs. Emergency services reported that thousands of residents have been evacuated from low-lying areas, and temporary shelters have been established. The flood has disrupted traffic, damaged homes, and affected businesses. Authorities have urged citizens to avoid traveling unless necessary and to follow updates from local disaster management offices. Meteorologists predict that water levels will remain high for the next few days, emphasizing the importance of precautionary measures.",
+    "reporter": "Somchai Prasert",
+    "dateTime": "2025-08-19T10:00:00",
+    "status": "notFake",
+    "image": "/images/image2.jpg",
+    "votes": { "fake": 2, "notFake": 15 },
+    "comments": [
+      { "user": "Nok", "text": "My house was flooded yesterday.", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Elon Musk Buys Thai Island",
+    "shortDetail": "Rumors spread that Musk acquired a private island in Phuket.",
+    "fullDetail": "Social media users speculated that Elon Musk had purchased a private island in Phuket to develop a private rocket testing site. The posts included images of luxury villas and private beaches with captions suggesting a secretive tech development project. Local authorities and real estate agents have denied these claims, stating that there is no record of such a transaction. Analysts warn the public to verify information from credible sources before sharing. The story quickly gained traction online, with hashtags trending across multiple platforms, highlighting the influence of viral misinformation in modern news cycles.",
+    "reporter": "Lisa Chan",
+    "dateTime": "2025-08-18T18:45:00",
+    "status": "fake",
+    "image": "/images/image3.jpg",
+    "votes": { "fake": 20, "notFake": 1 },
+    "comments": [
+      { "user": "Mark", "text": "Definitely fake news 😂", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Thailand Wins World Cup 2026 Bid",
+    "shortDetail": "FIFA allegedly awarded the 2026 World Cup to Thailand.",
+    "fullDetail": "A viral post claimed that FIFA had awarded Thailand the hosting rights for the 2026 World Cup. The claim spread rapidly on social media, accompanied by images of celebratory crowds and stadium renderings. FIFA officially confirmed that the 2026 World Cup will be held across North America, including the United States, Canada, and Mexico. The Thai Football Association clarified that there had been no official bid or negotiations for the 2026 tournament. While the news was false, it sparked excitement among football fans in Thailand, showing the strong local interest in hosting international sporting events.",
+    "reporter": "Michael Lee",
+    "dateTime": "2025-08-17T12:20:00",
+    "status": "fake",
+    "image": "/images/image4.jpg",
+    "votes": { "fake": 14, "notFake": 0 },
+    "comments": [
+      { "user": "David", "text": "Would have been amazing if true!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "New Train Line Opens in Bangkok",
+    "shortDetail": "The Pink Line officially starts service.",
+    "fullDetail": "Bangkok commuters welcomed the launch of the Pink Line, the latest addition to the city's expanding mass transit network. The transport ministry confirmed that the new line, which connects central Bangkok to the northern suburbs, is now fully operational. The project aims to reduce road congestion and provide faster, environmentally friendly transportation options. During the opening ceremony, officials highlighted the benefits of the line, including increased connectivity, modern stations with improved accessibility, and reduced travel times for daily commuters. Residents expressed excitement, noting the convenience this new service brings to their daily routines.",
+    "reporter": "Napat Wong",
+    "dateTime": "2025-08-16T09:00:00",
+    "status": "notFake",
+    "image": "/images/image5.jpg",
+    "votes": { "fake": 0, "notFake": 22 },
+    "comments": [
+      { "user": "Anna", "text": "Finally! My commute is easier now.", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Shark Spotted in Chao Phraya River",
+    "shortDetail": "Viral video shows a shark fin in Bangkok waters.",
+    "fullDetail": "A video circulating online claimed to show a shark swimming in the Chao Phraya River. Experts quickly debunked the footage, confirming that it had been digitally altered. Marine biologists explained that the river's freshwater environment and pollution levels make it impossible for sharks to survive. Authorities reassured the public that no dangerous animals were present and warned against spreading misinformation. The video nevertheless generated humorous reactions and sparked a discussion about verifying online content before sharing.",
+    "reporter": "Aree Phan",
+    "dateTime": "2025-08-15T14:10:00",
+    "status": "fake",
+    "image": "/images/image6.jpg",
+    "votes": { "fake": 19, "notFake": 2 },
+    "comments": [
+      { "user": "Ming", "text": "LOL, this is so fake.", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Thailand Introduces Free Healthcare for All",
+    "shortDetail": "Government announced expanded healthcare program.",
+    "fullDetail": "The Thai government unveiled a plan to expand its universal healthcare program, promising access to free medical services for all citizens starting next year. Prime Minister David Kim confirmed that the initiative will include free preventive care, vaccinations, and essential treatments. The move has been praised by healthcare professionals as a significant step toward reducing inequality in access to medical services. Citizens expressed optimism about the program, noting that it could alleviate financial burdens and improve public health outcomes nationwide.",
+    "reporter": "David Kim",
+    "dateTime": "2025-08-14T08:30:00",
+    "status": "notFake",
+    "image": "/images/image7.jpg",
+    "votes": { "fake": 3, "notFake": 18 },
+    "comments": [
+      { "user": "Lalisa", "text": "This is great news for everyone!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Bangkok Skytrain Extends to Pattaya",
+    "shortDetail": "Social media claims BTS line will reach Pattaya.",
+    "fullDetail": "A viral social media post claimed that Bangkok’s BTS Skytrain line would extend all the way to Pattaya. Transport officials denied the report, stating that no official plans currently exist for such an extension. Experts emphasized that the construction of a Skytrain line over such a long distance would require years of planning and significant investment. Despite the clarification, the post gained traction online, demonstrating how easily misinformation can spread and create public speculation about major infrastructure projects.",
+    "reporter": "Siriwan Thong",
+    "dateTime": "2025-08-13T19:15:00",
+    "status": "fake",
+    "image": "/images/image8.jpg",
+    "votes": { "fake": 10, "notFake": 1 },
+    "comments": []
+  },
+  {
+    "id": 9,
+    "title": "First Thai Astronaut to Launch in 2026",
+    "shortDetail": "Thailand to send astronaut with SpaceX mission.",
+    "fullDetail": "Thailand confirmed that its first astronaut will participate in a SpaceX mission scheduled for 2026. The astronaut, trained in collaboration with international space agencies, will undergo rigorous preparation in both physical and technical aspects of space travel. Officials highlighted this milestone as a major achievement in Thailand's growing interest in space exploration and STEM education. The announcement has inspired students and professionals alike, with many expressing national pride in Thailand’s entry into the global space arena.",
+    "reporter": "Anan Suwan",
+    "dateTime": "2025-08-12T15:50:00",
+    "status": "notFake",
+    "image": "/images/image9.jpg",
+    "votes": { "fake": 1, "notFake": 12 },
+    "comments": [
+      { "user": "Pim", "text": "Exciting news for Thailand!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Giant Meteor Heading Towards Earth",
+    "shortDetail": "Viral post claims imminent meteor strike.",
+    "fullDetail": "A social media post went viral claiming that a giant meteor would strike Earth within days. Scientists immediately debunked the claim, clarifying that no such threat exists. Astronomers emphasized the importance of relying on official space agencies for accurate information. Despite the false alarm, the post triggered widespread panic online and highlighted the influence of sensational content in social media.",
+    "reporter": "Kittipong Tan",
+    "dateTime": "2025-08-11T11:40:00",
+    "status": "fake",
+    "image": "/images/image10.jpg",
+    "votes": { "fake": 25, "notFake": 0 },
+    "comments": []
+  },
+   {
+    "id": 11,
+    "title": "Thai Baht Hits Record High",
+    "shortDetail": "Currency strengthens against US dollar.",
+    "fullDetail": "The Thai Baht reached its strongest value against the US dollar in a decade, with analysts citing strong export performance and increased foreign investment as key factors. Economists highlight that stable monetary policy and positive economic indicators contributed to the surge. Local businesses welcomed the news, noting that imports could become cheaper while exports may face minor cost challenges. Citizens expressed optimism, hoping for continued economic growth and stability. The central bank emphasized monitoring exchange rates to prevent sudden fluctuations and maintain balanced economic conditions.",
+    "reporter": "Emily Clark",
+    "dateTime": "2025-08-10T09:10:00",
+    "status": "notFake",
+    "image": "/images/image11.jpg",
+    "votes": { "fake": 2, "notFake": 14 },
+    "comments": [
+      { "user": "Ploy", "text": "Finally some good news for the economy!", "imageUrl": "", "vote": "notFake" },
+      { "user": "", "text": "I hope it stays this way.", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Dinosaurs Found in Chiang Mai",
+    "shortDetail": "Dig site revealed living dinosaurs underground.",
+    "fullDetail": "A viral post claimed that living dinosaurs had been discovered in a dig site near Chiang Mai. Paleontologists immediately dismissed the claims, explaining that no living dinosaurs exist today and that the images were digitally manipulated. Scientists also highlighted that the alleged excavation site is a popular tourist area known for fossils of prehistoric animals, which may have contributed to confusion. Social media users reacted with humor, creating memes and jokes about the 'prehistoric breakthrough.' Authorities reminded the public to rely on verified scientific sources to avoid spreading hoaxes.",
+    "reporter": "Mark Evans",
+    "dateTime": "2025-08-09T16:40:00",
+    "status": "fake",
+    "image": "/images/image12.jpg",
+    "votes": { "fake": 25, "notFake": 0 },
+    "comments": [
+      { "user": "Tony", "text": "This has to be fake 😂", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Chiang Mai Declared Smart City",
+    "shortDetail": "Government invests in smart city tech.",
+    "fullDetail": "The Thai government officially recognized Chiang Mai as a smart city, investing in Internet of Things (IoT) infrastructure, AI systems, and sustainable urban planning. Projects include intelligent traffic management, energy-efficient street lighting, and advanced public transportation monitoring. Officials stated that the initiative aims to improve residents’ quality of life, promote tourism, and attract international tech investments. Citizens welcomed the development, noting improvements in city services, environmental monitoring, and digital accessibility. Chiang Mai is now positioned as a model for urban innovation in Thailand.",
+    "reporter": "Natasha Li",
+    "dateTime": "2025-08-08T13:55:00",
+    "status": "notFake",
+    "image": "/images/image13.jpg",
+    "votes": { "fake": 0, "notFake": 11 },
+    "comments": [
+      { "user": "Kwan", "text": "Amazing progress!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Giant Snake Found in Bangkok Mall",
+    "shortDetail": "Photos show a python in a shopping mall.",
+    "fullDetail": "Authorities confirmed that a giant python was found wandering inside a popular Bangkok shopping mall. Rescue teams were dispatched immediately and safely captured the snake without harm to visitors. Officials stated that the snake likely escaped from a nearby private collection or was displaced from a natural habitat. Mall management closed some areas temporarily to ensure public safety. Social media footage of the event quickly went viral, with citizens expressing surprise and relief. Wildlife experts emphasized the importance of reporting large reptiles to authorities promptly to prevent potential incidents.",
+    "reporter": "Kittisak Rung",
+    "dateTime": "2025-08-07T17:20:00",
+    "status": "notFake",
+    "image": "/images/image14.jpg",
+    "votes": { "fake": 1, "notFake": 16 },
+    "comments": [
+      { "user": "", "text": "Wow, saw it on news!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Thailand Discovers Oil Reserves",
+    "shortDetail": "Rumors claim massive oil fields found in Isan.",
+    "fullDetail": "Rumors spread online that Thailand had discovered massive oil reserves in the Isan region. The Energy Ministry denied these reports, confirming that no new fields have been identified. Experts suggested that the viral posts were based on outdated geological surveys combined with speculation. Local residents expressed disappointment but also emphasized the need for accurate information. The incident serves as a reminder of the importance of relying on official government statements when reporting on natural resource discoveries.",
+    "reporter": "Paul Harris",
+    "dateTime": "2025-08-06T10:45:00",
+    "status": "fake",
+    "image": "/images/image15.jpg",
+    "votes": { "fake": 12, "notFake": 0 },
+    "comments": [
+      { "user": "Aom", "text": "Typical fake news!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Bangkok Air Quality Hits Record Low",
+    "shortDetail": "Smog levels worsen in central Bangkok.",
+    "fullDetail": "Bangkok's air pollution reached hazardous levels this week, with PM2.5 concentrations exceeding safe limits. The Pollution Control Department issued warnings for residents, especially children, the elderly, and people with respiratory issues, to avoid outdoor activities. The rise in smog is attributed to increased vehicle emissions, construction dust, and seasonal weather patterns. Local authorities recommended wearing masks, using air purifiers indoors, and limiting outdoor exposure. Public concern has prompted discussions about long-term solutions, including stricter vehicle emissions controls and green urban initiatives.",
+    "reporter": "Supaporn Meechai",
+    "dateTime": "2025-08-05T08:15:00",
+    "status": "notFake",
+    "image": "/images/image16.jpg",
+    "votes": { "fake": 0, "notFake": 20 },
+    "comments": [
+      { "user": "Lek", "text": "Need to wear masks daily now.", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Floating City Built in Gulf of Thailand",
+    "shortDetail": "Viral claim shows futuristic city in the ocean.",
+    "fullDetail": "Images and posts circulated online showing a futuristic floating city in the Gulf of Thailand. Architects and urban planners confirmed that no such project exists, and the images were generated using AI software. The viral content raised questions about responsible content creation and the spread of misinformation. Citizens discussed the potential benefits of floating cities, such as flood prevention and sustainable living, but experts clarified that current technology and budget constraints make such projects unrealistic at present. Authorities encouraged the public to verify the authenticity of viral content before sharing.",
+    "reporter": "Angela Park",
+    "dateTime": "2025-08-04T14:00:00",
+    "status": "fake",
+    "image": "/images/image17.jpg",
+    "votes": { "fake": 18, "notFake": 1 },
+    "comments": [
+      { "user": "Nok", "text": "Fake news, obviously!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Thai Student Wins Nobel Prize",
+    "shortDetail": "Bangkok student awarded Nobel for physics.",
+    "fullDetail": "In a historic achievement, a Thai student from Bangkok has been awarded the Nobel Prize in Physics for groundbreaking research in quantum materials. The announcement highlighted the student's innovative approach to superconductivity and advanced material properties. The Ministry of Education celebrated the accomplishment as a testament to Thailand's growing contribution to global science. Universities and research institutions praised the student’s work, noting its potential applications in energy and technology. Citizens expressed pride on social media, calling it an inspiring example for young scientists nationwide.",
+    "reporter": "Rachel Lim",
+    "dateTime": "2025-08-03T19:30:00",
+    "status": "notFake",
+    "image": "/images/image18.jpg",
+    "votes": { "fake": 0, "notFake": 25 },
+    "comments": [
+      { "user": "Tom", "text": "Inspiring!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Time Traveler Arrested in Chiang Rai",
+    "shortDetail": "Police allegedly caught a man from the future.",
+    "fullDetail": "A video circulated online claiming that police in Chiang Rai had arrested a man allegedly from the future, showing him with futuristic gadgets and clothing. Authorities investigated and confirmed the footage was staged, and no such person existed. Experts in digital media confirmed the video was heavily edited with special effects. Social media users widely shared the video as a joke, and discussions arose about the dangers of misinformation. Authorities reminded the public to verify the authenticity of sensational claims before sharing.",
+    "reporter": "Tom Richards",
+    "dateTime": "2025-08-02T12:00:00",
+    "status": "fake",
+    "image": "/images/image19.jpg",
+    "votes": { "fake": 22, "notFake": 0 },
+    "comments": [
+      { "user": "", "text": "Haha, totally fake.", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Thailand Opens First AI University",
+    "shortDetail": "New university focused entirely on AI and robotics.",
+    "fullDetail": "Thailand officially launched its first AI University in Bangkok, dedicated to advanced research in artificial intelligence, robotics, and data science. The Ministry of Education stated that the university aims to train a new generation of AI specialists to support national innovation and global competitiveness. Initial programs include robotics engineering, machine learning, and ethical AI governance. Industry leaders partnered with the university to offer internships and research opportunities. Students and academics expressed excitement, emphasizing that this initiative places Thailand at the forefront of technological education in Southeast Asia.",
+    "reporter": "Linda Wong",
+    "dateTime": "2025-08-01T09:50:00",
+    "status": "notFake",
+    "image": "/images/image20.jpg",
+    "votes": { "fake": 0, "notFake": 30 },
+    "comments": [
+      { "user": "Bee", "text": "Amazing opportunity for students!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Mystery Crop Circles in Kanchanaburi",
+    "shortDetail": "Strange formations appear overnight in fields.",
+    "fullDetail": "Viral photos showed strange crop circles appearing overnight in Kanchanaburi. Local authorities investigated and determined that the formations were man-made, created by pranksters using ropes and boards. Experts noted that while crop circles can be visually impressive, there is no evidence linking them to extraterrestrial activity. Social media users shared the images widely, with many joking about alien invasions. Farmers expressed concern about property damage but emphasized that no one was harmed. Authorities urged the public to respect farmland and avoid spreading sensational claims.",
+    "reporter": "James Parker",
+    "dateTime": "2025-07-31T18:25:00",
+    "status": "fake",
+    "image": "/images/image21.jpg",
+    "votes": { "fake": 16, "notFake": 2 },
+    "comments": [
+      { "user": "May", "text": "Clearly fake but funny!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Bangkok Subway Extends Hours",
+    "shortDetail": "City announces longer operation times for MRT.",
+    "fullDetail": "Bangkok's MRT subway network announced extended operation hours starting next month to accommodate increased ridership and tourism demands. The Department of Transport indicated that trains will now run until midnight on weekdays and 1 AM on weekends. The extension is expected to ease traffic congestion and provide safer travel options for residents and visitors. City officials also plan to improve station accessibility and enhance security measures. Citizens welcomed the announcement, highlighting convenience for late-night commuters and tourists exploring the city.",
+    "reporter": "Nattapong S.",
+    "dateTime": "2025-07-30T07:40:00",
+    "status": "notFake",
+    "image": "/images/image22.jpg",
+    "votes": { "fake": 0, "notFake": 19 },
+    "comments": [
+      { "user": "Fah", "text": "Great news for late-night travel!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Phuket Volcano Eruption?",
+    "shortDetail": "Viral photo claims new eruption on island.",
+    "fullDetail": "A viral post showed a smoke column and claimed that a volcano erupted in Phuket. Geologists and authorities confirmed there is no active volcano on Phuket and that the image was digitally altered. The post caused temporary panic among residents and tourists. Social media platforms flagged the content as misinformation. Experts emphasized the importance of cross-checking disaster news with credible sources, and authorities reassured the public that Phuket remains safe from volcanic activity.",
+    "reporter": "Daniel Kim",
+    "dateTime": "2025-07-29T15:15:00",
+    "status": "fake",
+    "image": "/images/image23.jpg",
+    "votes": { "fake": 20, "notFake": 0 },
+    "comments": [
+      { "user": "Oat", "text": "Completely fake!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Thailand Hosts World Chess Championship",
+    "shortDetail": "Bangkok becomes center of international chess.",
+    "fullDetail": "Thailand successfully hosted the World Chess Championship in Bangkok, attracting top players from around the globe. The event showcased competitive matches, workshops, and cultural exchanges, with local organizers emphasizing hospitality and efficient event management. The Thai Chess Federation highlighted the significance of hosting such a prestigious event, promoting chess education and youth participation in the country. Spectators enjoyed live matches and interactive sessions with grandmasters. International media praised the organization, reflecting positively on Thailand’s capability to host global sporting events.",
+    "reporter": "Sophie Tan",
+    "dateTime": "2025-07-28T12:50:00",
+    "status": "notFake",
+    "image": "/images/image24.jpg",
+    "votes": { "fake": 0, "notFake": 14 },
+    "comments": [
+      { "user": "Chai", "text": "Amazing event for chess lovers!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Floating Market Appears in Bangkok Canal",
+    "shortDetail": "Social media claims sudden floating market emergence.",
+    "fullDetail": "A video circulated online claiming that a new floating market appeared overnight in a central Bangkok canal. Authorities confirmed that no new market was established, and the video was a montage of old footage edited to look recent. The viral content caused confusion among tourists planning visits. Local merchants reminded the public that floating markets require extensive preparation and infrastructure. Experts highlighted the importance of verifying travel information from official tourism sources to avoid misinformation and disappointment.",
+    "reporter": "Alex Wong",
+    "dateTime": "2025-07-27T09:30:00",
+    "status": "fake",
+    "image": "/images/image25.jpg",
+    "votes": { "fake": 15, "notFake": 1 },
+    "comments": [
+      { "user": "Nok", "text": "Haha, totally fake video!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 26,
+    "title": "New High-Speed Rail Connects Bangkok to Chiang Mai",
+    "shortDetail": "Railway project inaugurated with advanced trains.",
+    "fullDetail": "Thailand inaugurated its first high-speed rail connecting Bangkok and Chiang Mai, reducing travel time significantly. Officials emphasized modern train technology, safety standards, and enhanced passenger comfort. The project aims to boost tourism, business travel, and regional development. Citizens expressed excitement over faster transportation options, while urban planners discussed potential economic benefits for cities along the route. Environmental assessments were conducted to ensure sustainable development, and authorities promised ongoing monitoring of rail performance.",
+    "reporter": "Ming Lee",
+    "dateTime": "2025-07-26T08:00:00",
+    "status": "notFake",
+    "image": "/images/image26.jpg",
+    "votes": { "fake": 0, "notFake": 22 },
+    "comments": [
+      { "user": "Aom", "text": "Finally a faster way to travel north!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Phuket Beach Turns Pink",
+    "shortDetail": "Photos show sand turned pink overnight.",
+    "fullDetail": "Viral images claimed that a Phuket beach turned pink overnight due to mysterious phenomena. Environmental scientists confirmed that the photos were digitally altered, and no such natural occurrence took place. The pink hue in the images was attributed to social media editing apps. Tourists and locals shared the images widely, sparking curiosity and jokes online. Authorities reminded the public to rely on verified information when planning trips or reporting environmental changes.",
+    "reporter": "Linda Chen",
+    "dateTime": "2025-07-25T17:45:00",
+    "status": "fake",
+    "image": "/images/image27.jpg",
+    "votes": { "fake": 18, "notFake": 0 },
+    "comments": [
+      { "user": "Lek", "text": "Obvious fake!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Thai Government Launches Space Program",
+    "shortDetail": "Plans for satellites and astronauts announced.",
+    "fullDetail": "Thailand announced a national space program focused on launching satellites, developing astronaut training programs, and advancing space research. Officials highlighted partnerships with international space agencies and local universities to promote STEM education and innovation. The initiative aims to position Thailand as a key player in the regional aerospace industry. Citizens expressed pride and curiosity about the new program. Media coverage emphasized both the challenges and opportunities associated with developing a sustainable and competitive space program.",
+    "reporter": "James Tan",
+    "dateTime": "2025-07-24T11:20:00",
+    "status": "notFake",
+    "image": "/images/image28.jpg",
+    "votes": { "fake": 0, "notFake": 21 },
+    "comments": [
+      { "user": "Fah", "text": "Exciting for young scientists!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Giant Shark Sighted Near Pattaya",
+    "shortDetail": "Social media spreads shark sighting video.",
+    "fullDetail": "A video circulated online claiming a giant shark was sighted near Pattaya beach. Marine authorities investigated and confirmed the video was digitally edited. The viral content caused temporary fear among tourists and locals. Experts explained that such large sharks do not inhabit shallow coastal waters near Pattaya. Authorities reminded citizens to verify information from credible marine research organizations before sharing on social media.",
+    "reporter": "Tommy Lee",
+    "dateTime": "2025-07-23T14:05:00",
+    "status": "fake",
+    "image": "/images/image29.jpg",
+    "votes": { "fake": 17, "notFake": 0 },
+    "comments": [
+      { "user": "Nok", "text": "Fake news again!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Bangkok Hosts International Film Festival",
+    "shortDetail": "Cinema from around the world showcased in city.",
+    "fullDetail": "Bangkok hosted the International Film Festival, featuring films from multiple countries, panel discussions, and workshops. The festival promoted cultural exchange, film education, and creative collaboration. Local cinemas and theaters participated, and tourists attended screenings of both mainstream and independent films. Officials highlighted the event as a platform for emerging filmmakers and international collaboration. Citizens praised the organization and the exposure to global cinema.",
+    "reporter": "Rachel Tan",
+    "dateTime": "2025-07-22T10:30:00",
+    "status": "notFake",
+    "image": "/images/image30.jpg",
+    "votes": { "fake": 0, "notFake": 16 },
+    "comments": [
+      { "user": "Chai", "text": "Love the film selections!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Thailand Discovers New Species of Orchid",
+    "shortDetail": "Researchers find unique flower in northern forest.",
+    "fullDetail": "Botanists in northern Thailand discovered a new species of orchid with distinct colors and petal shapes. The Ministry of Natural Resources and Environment confirmed the discovery and highlighted its importance for biodiversity and conservation efforts. The new species was named after the region where it was found. Researchers plan further studies to understand its ecological role and potential medicinal properties. Citizens expressed pride in Thailand's rich biodiversity and commitment to environmental protection.",
+    "reporter": "Emily Tan",
+    "dateTime": "2025-07-21T09:10:00",
+    "status": "notFake",
+    "image": "/images/image31.jpg",
+    "votes": { "fake": 0, "notFake": 18 },
+    "comments": [
+      { "user": "Ploy", "text": "Beautiful discovery!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Ghost Ship Appears in Gulf of Thailand",
+    "shortDetail": "Social media claims haunted vessel spotted at sea.",
+    "fullDetail": "A viral video claimed a ghost ship appeared in the Gulf of Thailand. Maritime authorities confirmed that the video was fabricated using CGI effects. The footage sparked curiosity and fear online, with many users sharing stories and memes. Experts reminded the public that no verified reports exist of supernatural ships and emphasized responsible social media use. Local communities were unaffected, and authorities encouraged relying on verified news sources.",
+    "reporter": "Daniel Park",
+    "dateTime": "2025-07-20T12:50:00",
+    "status": "fake",
+    "image": "/images/image32.jpg",
+    "votes": { "fake": 21, "notFake": 0 },
+    "comments": [
+      { "user": "Tony", "text": "Obvious fake!", "imageUrl": "", "vote": "fake" }
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Chiang Mai Hosts Lantern Festival",
+    "shortDetail": "Annual festival celebrated with thousands of lanterns.",
+    "fullDetail": "Chiang Mai hosted its annual Lantern Festival, attracting thousands of locals and tourists. The event showcased traditional cultural performances, lantern releases, and local crafts. Authorities emphasized safety measures and crowd management. The festival highlighted Thailand’s rich cultural heritage and promoted tourism. Citizens and tourists enjoyed the spectacle, taking part in lighting lanterns and celebrating together. Media coverage praised the organization and the cultural significance of the event.",
+    "reporter": "Sophie Lim",
+    "dateTime": "2025-07-19T19:30:00",
+    "status": "notFake",
+    "image": "/images/image33.jpg",
+    "votes": { "fake": 0, "notFake": 22 },
+    "comments": [
+      { "user": "Kwan", "text": "So beautiful!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Thailand Tests Hyperloop Prototype",
+    "shortDetail": "High-speed transportation tested between Bangkok and nearby city.",
+    "fullDetail": "Thailand conducted a successful test of a hyperloop prototype connecting Bangkok to a nearby city. Officials highlighted advanced technology, safety features, and the potential to reduce travel times dramatically. Engineers monitored performance metrics and passenger comfort. The government plans further tests and eventual expansion if successful. Citizens expressed excitement about the future of high-speed travel and sustainable transport innovation in Thailand.",
+    "reporter": "Angela Lim",
+    "dateTime": "2025-07-18T08:45:00",
+    "status": "notFake",
+    "image": "/images/image34.jpg",
+    "votes": { "fake": 0, "notFake": 20 },
+    "comments": [
+      { "user": "Bee", "text": "Can't wait to try it!", "imageUrl": "", "vote": "notFake" }
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Viral Elephant Selfie Goes Wrong",
+    "shortDetail": "Tourist takes selfie with elephant, gets trampled.",
+    "fullDetail": "A viral video showed a tourist attempting to take a selfie with an elephant at a sanctuary, resulting in the animal accidentally stepping on the person’s foot. Authorities confirmed no serious injuries occurred, but they warned visitors about safety around large animals. The sanctuary emphasized ethical animal interaction and responsible tourism. Social media users debated safe practices, while tourism experts advised following guidelines when engaging with wildlife to prevent accidents.",
+    "reporter": "Mark Lim",
+    "dateTime": "2025-07-17T16:20:00",
+    "status": "notFake",
+    "image": "/images/image35.jpg",
+    "votes": { "fake": 1, "notFake": 15 },
+    "comments": [
+      { "user": "Nok", "text": "Better be careful!", "imageUrl": "", "vote": "notFake" }
+    ]
+  }
+]
