@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-28T13:38:34+0700",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 23 (Oracle Corporation)"
+    date = "2025-10-29T15:48:12+0700",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251001-1143, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 @Component
 public class NewsMapperImpl implements NewsMapper {
@@ -29,13 +29,13 @@ public class NewsMapperImpl implements NewsMapper {
 
         NewsDto.NewsDtoBuilder newsDto = NewsDto.builder();
 
-        newsDto.title( news.getTitle() );
-        newsDto.shortDetail( news.getShortDetail() );
+        newsDto.comments( commentMapper.toDtoList( news.getComments() ) );
         newsDto.fullDetail( news.getFullDetail() );
         newsDto.imageUrl( news.getImageUrl() );
-        newsDto.status( news.getStatus() );
         newsDto.reporter( userMapper.toDto( news.getReporter() ) );
-        newsDto.comments( commentMapper.toDtoList( news.getComments() ) );
+        newsDto.shortDetail( news.getShortDetail() );
+        newsDto.status( news.getStatus() );
+        newsDto.title( news.getTitle() );
         newsDto.voteCount( voteCountToVoteCountDto( news.getVoteCount() ) );
 
         newsDto.commentCount( news.getComments() != null ? (long) news.getComments().size() : 0L );
@@ -51,12 +51,12 @@ public class NewsMapperImpl implements NewsMapper {
 
         NewsDto.NewsDtoBuilder newsDto = NewsDto.builder();
 
-        newsDto.title( news.getTitle() );
-        newsDto.shortDetail( news.getShortDetail() );
         newsDto.fullDetail( news.getFullDetail() );
         newsDto.imageUrl( news.getImageUrl() );
-        newsDto.status( news.getStatus() );
         newsDto.reporter( userMapper.toDto( news.getReporter() ) );
+        newsDto.shortDetail( news.getShortDetail() );
+        newsDto.status( news.getStatus() );
+        newsDto.title( news.getTitle() );
         newsDto.voteCount( voteCountToVoteCountDto( news.getVoteCount() ) );
 
         newsDto.commentCount( news.getComments() != null ? (long) news.getComments().size() : 0L );
@@ -115,13 +115,13 @@ public class NewsMapperImpl implements NewsMapper {
         NewsDto.NewsDtoBuilder newsDto = NewsDto.builder();
 
         newsDto.voteCount( mapVoteCount( news.getVoteCount() ) );
-        newsDto.title( news.getTitle() );
-        newsDto.shortDetail( news.getShortDetail() );
+        newsDto.comments( commentMapper.toDtoList( news.getComments() ) );
         newsDto.fullDetail( news.getFullDetail() );
         newsDto.imageUrl( news.getImageUrl() );
-        newsDto.status( news.getStatus() );
         newsDto.reporter( userMapper.toDto( news.getReporter() ) );
-        newsDto.comments( commentMapper.toDtoList( news.getComments() ) );
+        newsDto.shortDetail( news.getShortDetail() );
+        newsDto.status( news.getStatus() );
+        newsDto.title( news.getTitle() );
 
         newsDto.commentCount( news.getComments() != null ? (long) news.getComments().size() : 0L );
 
@@ -153,11 +153,11 @@ public class NewsMapperImpl implements NewsMapper {
 
         NewsDto.VoteCountDto.VoteCountDtoBuilder voteCountDto = NewsDto.VoteCountDto.builder();
 
+        voteCountDto.fakePercentage( voteCount.getFakePercentage() );
         voteCountDto.fakeVotes( voteCount.getFakeVotes() );
+        voteCountDto.notFakePercentage( voteCount.getNotFakePercentage() );
         voteCountDto.notFakeVotes( voteCount.getNotFakeVotes() );
         voteCountDto.totalVotes( voteCount.getTotalVotes() );
-        voteCountDto.fakePercentage( voteCount.getFakePercentage() );
-        voteCountDto.notFakePercentage( voteCount.getNotFakePercentage() );
 
         return voteCountDto.build();
     }
