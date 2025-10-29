@@ -1,41 +1,35 @@
 <template>
   <div class="min-h-screen">
-    <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-[#639FFF] to-primary-dark text-white py-8">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">📰 Anti-Fake News</h1>
-        <p class="text-base md:text-lg mb-6 opacity-90">Fighting misinformation, one truth at a time</p>
 
-        <!-- Search Bar -->
-        <div class="max-w-2xl mx-auto">
-          <div class="relative">
-            <input
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      <div class="max-w-3xl mx-auto mb-8">
+        <div class="relative">
+          <input
               v-model="searchQuery"
               type="text"
-              placeholder="Search news articles..."
-              class="w-full px-4 py-3 text-gray-900 rounded-full shadow-lg focus:outline-none focus:ring-4 focus:ring-[#8BB8FF] text-base"
-            />
-            <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
-              <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-              </svg>
-            </div>
+              placeholder="Search news articles by title, detail, or reporter..."
+              class="w-full px-5 py-3 text-gray-900 rounded-full shadow-lg border border-gray-300 focus:outline-none focus:ring-4 focus:ring-[#8BB8FF] text-base transition-shadow"
+          />
+          <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <!-- Controls -->
       <div class="flex flex-col gap-4 mb-6">
-        <div class="flex gap-3 overflow-x-auto no-scrollbar py-1">
+
+        <div class="flex flex-wrap items-center gap-3 py-1">
+          <h3 class="text-lg font-semibold text-gray-700 mr-2 hidden sm:block">Filter By:</h3>
           <button
-            v-for="option in filterOptions"
-            :key="option.value"
-            @click="setFilter(option.value)"
-            :class="[
-              'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg',
+              v-for="option in filterOptions"
+              :key="option.value"
+              @click="setFilter(option.value)"
+              :class="[
+              // flex-shrink-0 is crucial here to guarantee button width
+              'flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 shadow-md hover:shadow-lg',
               filter === option.value
                 ? 'bg-primary text-white shadow-blue-200'
                 : 'bg-white text-gray-700 hover:bg-primary/10 border border-primary/20'
@@ -44,109 +38,45 @@
             {{ option.icon }} {{ option.label }}
           </button>
         </div>
-          <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow border border-primary/20 text-sm">
-            <label class="text-gray-600">Show</label>
-            <select v-model="itemsPerPage" class="border-0 bg-transparent text-sm font-medium focus:outline-none">
-              <option v-for="n in [5,10,15,20]" :key="n" :value="n">{{n}}</option>
-            </select>
+
+        <div class="flex items-center justify-between gap-4 border-t border-gray-200 pt-4">
+          <div class="flex items-center space-x-4">
+            <div class="flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow border border-primary/20 text-sm">
+              <label class="text-gray-600">Show</label>
+              <select v-model="itemsPerPage" class="border-0 bg-transparent text-sm font-medium focus:outline-none">
+                <option v-for="n in [5,10,15,20]" :key="n" :value="n">{{n}}</option>
+              </select>
+            </div>
+
+            <div class="hidden md:flex flex-wrap gap-3">
+              <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
+                <span>🚫 Fake</span>
+                <span class="text-red-600 font-semibold">{{ fakeNewsCount }}</span>
+              </div>
+              <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
+                <span>✅ Real</span>
+                <span class="text-green-600 font-semibold">{{ realNewsCount }}</span>
+              </div>
+            </div>
           </div>
+
           <button
-            @click="goToAddNews"
-            class="px-5 py-2 bg-primary text-white font-semibold rounded-full hover:bg-primary-dark shadow-md hover:shadow-lg transition-all duration-200"
+              @click="goToAddNews"
+              class="px-5 py-2 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-200"
           >
             ➕ Add News
           </button>
         </div>
       </div>
 
-      <!-- Statistics Pills -->
-      <div class="flex flex-wrap gap-3 mb-6">
-        <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
-          <span>🚫 Fake</span>
-          <span class="text-primary font-semibold">{{ fakeNewsCount }}</span>
-        </div>
-        <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
-          <span>✅ Real</span>
-          <span class="text-primary font-semibold">{{ realNewsCount }}</span>
-        </div>
-        <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
-          <span>❓ Undecided</span>
-          <span class="text-primary-dark font-semibold">{{ undecidedNewsCount }}</span>
-        </div>
+      <div class="news-grid">
+        <NewsCard
+            v-for="news in paginatedNews"
+            :key="news.id"
+            :news="news"
+        />
       </div>
 
-      <!-- News Grid -->
-      <div class="grid grid-cols-2 gap-6 md:gap-8">
-        <div
-          v-for="news in paginatedNews"
-          :key="news.id"
-          @click="goToDetail(news.id)"
-          class="bg-white rounded-xl shadow-lg hover:shadow-xl cursor-pointer transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group border border-primary/10"
-        >
-          <!-- Image -->
-          <div class="relative aspect-16-9 overflow-hidden">
-            <img :src="news.image" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" alt="news thumbnail" />
-            <div class="absolute top-4 right-4">
-              <span :class="[
-                'px-3 py-1 rounded-full text-xs font-bold shadow-lg',
-                news.status === 'fake' ? 'bg-red-600 text-white' :
-                news.status === 'notFake' ? 'bg-green-600 text-white' :
-                'bg-primary-dark text-white'
-              ]">
-                {{ news.status === 'fake' ? 'Fake' : news.status === 'notFake' ? 'Real' : 'Undecided' }}
-              </span>
-            </div>
-          </div>
-
-          <!-- Content -->
-          <div class="p-6">
-            <h3 class="text-2xl font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-              {{ news.title }}
-            </h3>
-            <p class="text-gray-600 text-base mb-5 line-clamp-3 leading-relaxed">{{ news.shortDetail }}</p>
-
-            <!-- Meta Info -->
-            <div class="flex items-center justify-between text-xs text-gray-500 mb-4">
-              <span class="flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-                {{ news.reporter }}
-              </span>
-              <span class="flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                {{ formatDate(news.dateTime) }}
-              </span>
-            </div>
-
-            <!-- Vote Totals -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-4">
-                <div class="flex items-center text-blue-600">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="text-sm font-semibold">{{ news.votes.fake }}</span>
-                </div>
-                <div class="flex items-center text-blue-500">
-                  <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="text-sm font-semibold">{{ news.votes.notFake }}</span>
-                </div>
-              </div>
-              <div class="text-primary text-sm font-medium group-hover:text-primary-dark">
-                Read More →
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Empty State -->
       <div v-if="paginatedNews.length === 0" class="text-center py-12">
         <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
           <span class="text-4xl">📰</span>
@@ -155,12 +85,11 @@
         <p class="text-gray-500">Try adjusting your search or filter criteria</p>
       </div>
 
-      <!-- Pagination -->
       <div class="flex justify-center items-center mt-10 gap-3">
         <button
-          @click="prevPage"
-          :disabled="currentPage === 1"
-          class="px-3 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+            @click="prevPage"
+            :disabled="currentPage === 1"
+            class="px-3 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
         >
           ← Previous
         </button>
@@ -172,9 +101,9 @@
         </div>
 
         <button
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          class="px-3 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+            @click="nextPage"
+            :disabled="currentPage === totalPages"
+            class="px-3 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
         >
           Next →
         </button>
@@ -189,6 +118,8 @@ import { useRouter } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+
+import NewsCard from '../components/NewsCard.vue'
 
 // Configure NProgress
 NProgress.configure({ showSpinner: false, speed: 500, minimum: 0.1 })
@@ -219,10 +150,10 @@ const searchedNews = computed(() => {
 
   const query = searchQuery.value.toLowerCase()
   return store.newsList.filter(news =>
-    news.title.toLowerCase().includes(query) ||
-    news.shortDetail.toLowerCase().includes(query) ||
-    news.fullDetail.toLowerCase().includes(query) ||
-    news.reporter.toLowerCase().includes(query)
+      news.title.toLowerCase().includes(query) ||
+      news.shortDetail.toLowerCase().includes(query) ||
+      news.fullDetail.toLowerCase().includes(query) ||
+      news.reporter.toLowerCase().includes(query)
   )
 })
 
@@ -288,3 +219,37 @@ function formatDate(dateStr) {
   return date.toLocaleDateString()
 }
 </script>
+
+<style scoped>
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem; /* gap-6 */
+}
+
+@media (min-width: 640px) { /* 'sm' breakpoint for tablets/small laptops */
+  .news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) { /* 'lg' breakpoint */
+  .news-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Optional 3rd column for large screens */
+  }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>

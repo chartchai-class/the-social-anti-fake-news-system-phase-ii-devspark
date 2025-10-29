@@ -1,30 +1,54 @@
 <template>
-  <div 
-    class="card relative cursor-pointer hover:shadow-xl transition p-4 flex flex-col"
-    @click="handleClick(news.id)"
+  <div
+      class="card relative cursor-pointer hover:shadow-xl transition p-4 flex flex-col group bg-white rounded-xl shadow-md border border-gray-100 min-h-[480px]"
+      @click="handleClick(news.id)"
   >
-    <!-- Loader overlay -->
-    <div v-if="loadingId === news.id" class="absolute inset-0 bg-black/50 flex items-center justify-center rounded">
-      <div class="loader border-t-4 border-yellow-400 border-b-4 border-transparent w-8 h-8 rounded-full animate-spin"></div>
+    <div class="relative w-full h-48 overflow-hidden rounded-lg mb-4 flex-shrink-0">
+      <img
+          v-if="news.image"
+          :src="news.image"
+          :alt="news.title || 'news image'"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          @error="$event.target.src = '/images/placeholder.jpg'"
+      />
+      <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
+        No Image Available
+      </div>
     </div>
 
-    <img 
-      :src="news.imageUrl" 
-      alt="news image" 
-      class="w-full h-44 md:h-52 object-cover rounded mb-3"
-    />
-    <h2 class="text-lg md:text-xl font-semibold mb-1 text-gray-900 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
-    <p class="text-sm md:text-base text-gray-600 flex-1">{{ news.shortDetail }}</p>
-    <div class="mt-2 text-xs md:text-sm text-gray-500 flex justify-between">
-      <span>By {{ news.reporter }}</span>
-      <span>{{ formatDate(news.dateTime) }}</span>
+    <div class="flex flex-col flex-grow justify-between">
+      <div>
+        <h2 class="text-xl font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
+
+        <p class="text-sm text-gray-600 line-clamp-3 mb-4">{{ news.shortDetail }}</p>
+      </div>
+
+      <div class="mt-auto">
+        <div class="flex items-center justify-between text-xs text-gray-500 border-t border-gray-100 pt-3 mb-3">
+              <span class="flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+                {{ news.reporter }}
+              </span>
+          <span class="flex items-center">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                {{ formatDate(news.dateTime) }}
+              </span>
+        </div>
+
+        <span
+            :class="['inline-block px-3 py-1 text-xs rounded-full font-bold uppercase tracking-wider text-center',
+              news.status === 'fake' ? 'bg-red-100 text-red-700' :
+              news.status === 'notFake' ? 'bg-green-100 text-green-700' :
+              'bg-yellow-100 text-yellow-700']"
+        >
+              {{ news.status === 'fake' ? 'Fake' : news.status === 'notFake' ? 'Real' : 'Undecided' }}
+            </span>
+      </div>
     </div>
-    <span 
-      :class="['mt-3 inline-block px-2.5 py-1.5 text-xs rounded-full font-semibold', 
-      news.status === 'Fake' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700']"
-    >
-      {{ news.status }}
-    </span>
   </div>
 </template>
 
@@ -50,25 +74,31 @@ function handleClick(newsId) {
 }
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })
+  try {
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    }
+    return date.toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+  } catch (e) {
+    return "Invalid Date";
+  }
 }
 </script>
 
 <style scoped>
-.loader {
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 4px;
-  border-top-color: #ffb703;
-  border-right-color: transparent;
-  border-bottom-color: #ffb703;
-  border-left-color: transparent;
-  width: 2rem;
-  height: 2rem;
-  animation: spin 1s linear infinite;
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
 </style>
