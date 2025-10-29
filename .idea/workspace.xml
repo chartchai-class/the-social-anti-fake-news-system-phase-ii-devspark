@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44cabe94-e193-4415-81b3-113bf83fb2d0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/Register.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/AdminPanel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +84,7 @@
       <workItem from="1761729226666" duration="15000" />
       <workItem from="1761729392745" duration="45000" />
       <workItem from="1761729602113" duration="2516000" />
-      <workItem from="1761732183366" duration="1055000" />
+      <workItem from="1761732183366" duration="1177000" />
     </task>
     <servers />
   </component>
