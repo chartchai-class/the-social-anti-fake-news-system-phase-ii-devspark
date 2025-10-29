@@ -282,21 +282,21 @@ textarea:focus {
   .main-container {
     padding: 1rem;
   }
-  
+
   .card {
     padding: 1rem;
     margin-bottom: 1rem;
   }
-  
+
   h1 { font-size: 1.875rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.25rem; }
-  
+
   button {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
   }
-  
+
   input[type="text"],
   input[type="url"],
   textarea {
@@ -309,11 +309,11 @@ textarea:focus {
   .main-container {
     padding: 0.5rem;
   }
-  
+
   .card {
     padding: 0.75rem;
   }
-  
+
   h1 { font-size: 1.5rem; }
   h2 { font-size: 1.25rem; }
   h3 { font-size: 1.125rem; }
