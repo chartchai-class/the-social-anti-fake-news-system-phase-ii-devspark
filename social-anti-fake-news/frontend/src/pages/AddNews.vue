@@ -113,7 +113,18 @@ const handleImageError = () => {
   image.value = '/images/placeholder.jpg'
 }
 
-const submitNews = () => {
+const submitNews = async () => {
+  try {
+    await addSchema.validate({
+      title: title.value,
+      shortDetail: shortDetail.value,
+      detail: detail.value
+    }, {abortEarly: false})
+  } catch (err) {
+    // collect and show errors (similar to Register)
+    alert(err.errors?.join('\n') || err.message)
+    return
+  }
   const newNews = {
     title: title.value.trim(),
     shortDetail: shortDetail.value.trim(),
@@ -131,7 +142,14 @@ const submitNews = () => {
   shortDetail.value = ''
   detail.value = ''
   image.value = ''
+
 }
+import * as yup from 'yup'
+const addSchema = yup.object({
+  title: yup.string().required('Title required').min(5,'Min 5 chars'),
+  shortDetail: yup.string().required('Short detail required').min(10,'Min 10 chars'),
+  detail: yup.string().required('Detail required').min(20,'Min 20 chars')
+})
 </script>
 
 <style scoped>
