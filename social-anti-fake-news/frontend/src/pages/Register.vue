@@ -79,11 +79,7 @@ export default {
       const err = validate()
       if (err) return alert(err)
 
-      // if backend API exists, replace block below with POST /api/users/register
-      // Example (axios):
-      // await axios.post('/api/users/register', {...})
 
-      // For grading: store minimal user in client store (mock)
       ns.user = {
         id: Date.now(),
         name: form.value.displayName || form.value.username,

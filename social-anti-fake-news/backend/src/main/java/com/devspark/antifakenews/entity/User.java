@@ -62,6 +62,6 @@ public class User extends BaseEntity {
     private List<Vote> votes = new ArrayList<>();
 
     public enum Role {
-        USER, ADMIN, MODERATOR
+        READER, ADMIN, USER
     }
 }

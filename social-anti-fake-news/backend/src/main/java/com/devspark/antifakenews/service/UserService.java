@@ -20,7 +20,7 @@ public class UserService {
             throw new RuntimeException("Username already exists");
         }
         user.setRole(User.Role.USER);
-        user.setActive(true);
+        user.setIsActive(true);
         return userRepository.save(user);
     }
 
