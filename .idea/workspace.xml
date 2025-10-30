@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44cabe94-e193-4415-81b3-113bf83fb2d0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/components/Header.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/NewsDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/NewsDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/authStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/authStore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/newsStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/newsStore.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +64,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\For_Git\the-social-anti-fake-news-system-phase-ii-devspark\social-anti-fake-news\frontend\src\components" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="AntiFakeNewsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="anti-fake-news-backend" />
@@ -94,7 +100,7 @@
       <workItem from="1761729602113" duration="2516000" />
       <workItem from="1761732183366" duration="16276000" />
       <workItem from="1761810167441" duration="3323000" />
-      <workItem from="1761817854046" duration="1459000" />
+      <workItem from="1761817854046" duration="5442000" />
     </task>
     <servers />
   </component>

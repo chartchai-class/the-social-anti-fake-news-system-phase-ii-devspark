@@ -2,8 +2,8 @@
   <div v-if="news" class="min-h-screen bg-gray-50">
     <!-- Back Button -->
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-      <button 
-        @click="goBack" 
+      <button
+        @click="goBack"
         class="flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-6"
       >
         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,13 +20,13 @@
         <div class="relative h-80 overflow-hidden">
           <img :src="news.image" class="w-full h-full object-cover" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-          
+
           <!-- Status Badge -->
           <div class="absolute top-6 right-6">
             <span :class="[
               'px-4 py-2 rounded-full text-sm font-bold shadow-lg',
-              news.status === 'fake' ? 'bg-blue-700 text-white' : 
-              news.status === 'notFake' ? 'bg-blue-600 text-white' : 
+              news.status === 'fake' ? 'bg-blue-700 text-white' :
+              news.status === 'notFake' ? 'bg-blue-600 text-white' :
               'bg-blue-400 text-white'
             ]">
               {{ news.status === 'fake' ? 'Fake News' : news.status === 'notFake' ? 'Real News' : 'Undecided' }}
@@ -73,7 +73,7 @@
                 <div class="text-3xl font-bold text-blue-700 mb-2">{{ news.votes.fake }}</div>
                 <div class="text-sm text-gray-600">Votes for Fake</div>
                 <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div 
+                  <div
                     class="bg-blue-700 h-2 rounded-full transition-all duration-500"
                     :style="{ width: `${getVotePercentage('fake')}%` }"
                   ></div>
@@ -83,7 +83,7 @@
                 <div class="text-3xl font-bold text-blue-500 mb-2">{{ news.votes.notFake }}</div>
                 <div class="text-sm text-gray-600">Votes for Real</div>
                 <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div 
+                  <div
                     class="bg-blue-500 h-2 rounded-full transition-all duration-500"
                     :style="{ width: `${getVotePercentage('notFake')}%` }"
                   ></div>
@@ -105,7 +105,7 @@
           <!-- Comments Section -->
           <div class="mt-12">
             <h2 class="text-2xl font-bold text-gray-900 mb-6">Comments ({{ news.comments.length }})</h2>
-            
+
             <div v-if="news.comments.length === 0" class="text-center py-8">
               <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                 <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,8 +132,8 @@
                       <h4 class="text-sm font-semibold text-gray-900">{{ comment.user }}</h4>
                       <span :class="[
                         'px-2 py-1 rounded-full text-xs font-medium',
-                        comment.vote === 'fake' ? 'bg-red-100 text-red-700' : 
-                        comment.vote === 'notFake' ? 'bg-green-100 text-green-700' : 
+                        comment.vote === 'fake' ? 'bg-red-100 text-red-700' :
+                        comment.vote === 'notFake' ? 'bg-green-100 text-green-700' :
                         'bg-gray-100 text-gray-700'
                       ]">
                         {{ comment.vote === 'fake' ? '🚫 Fake' : comment.vote === 'notFake' ? '✅ Real' : '❓ Undecided' }}
@@ -171,8 +171,8 @@
       </div>
       <h3 class="text-lg font-medium text-gray-900 mb-2">News not found</h3>
       <p class="text-gray-500 mb-6">The news article you're looking for doesn't exist or has been removed.</p>
-      <button 
-        @click="goBack" 
+      <button
+        @click="goBack"
         class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
       >
         Back to News
@@ -207,13 +207,13 @@ function formatDate(dateStr) {
   const date = new Date(dateStr)
   const now = new Date()
   const diffInHours = (now - date) / (1000 * 60 * 60)
-  
+
   if (diffInHours < 1) return 'Just now'
   if (diffInHours < 24) return `${Math.floor(diffInHours)}h ago`
   if (diffInHours < 48) return 'Yesterday'
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit'

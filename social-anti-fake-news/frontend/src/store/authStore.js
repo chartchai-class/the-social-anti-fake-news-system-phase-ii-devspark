@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 
-const STORAGE_KEY = 'afn_auth_v1'
+const AUTH_KEY = 'afn_auth_v1'
 const USERS_KEY = 'afn_users_v1'
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        user: JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'),
+        user: JSON.parse(localStorage.getItem(AUTH_KEY) || 'null'),
         users: JSON.parse(localStorage.getItem(USERS_KEY) || '[]')
     }),
     getters: {
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
                 this.save()
             }
         },
-        registerClient(payload){
+        registerLocal(payload){
             // payload: {username,email,name,imageUrl}
             const id = Date.now()
             const user = { id, username: payload.username, email: payload.email, name: payload.name||payload.username, imageUrl: payload.imageUrl||'', role:'READER' }
