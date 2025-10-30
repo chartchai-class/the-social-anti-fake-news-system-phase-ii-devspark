@@ -1,5 +1,6 @@
 <template>
   <nav class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
+
     <div class="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6">
       <div class="flex justify-between items-center h-14">
         <!-- Logo - smaller on mobile -->

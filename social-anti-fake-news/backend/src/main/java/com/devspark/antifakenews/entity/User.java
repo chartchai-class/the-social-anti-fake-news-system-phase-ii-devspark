@@ -48,7 +48,7 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     @Builder.Default
-    private Role role = Role.USER;
+    private Role role = Role.READER;
 
 
     @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -65,4 +65,5 @@ public class User extends BaseEntity {
 
     public enum Role {
         READER, ADMIN, USER
-    }}
+    }
+}
