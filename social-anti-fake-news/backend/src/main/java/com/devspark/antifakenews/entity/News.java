@@ -9,12 +9,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Instant;
+// Removed java.time.Instant import
 
 /**
  * News entity representing news articles
- * 
- * @author DevSpark Team
+ * * @author DevSpark Team
  * @version 1.0.0
  */
 @Entity
@@ -46,7 +45,9 @@ public class News extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
-    private Instant createdAt = Instant.now();
+
+    // FIX APPLIED: Removed the conflicting 'private Instant createdAt = Instant.now();'
+    // Timestamps are handled by BaseEntity.
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
@@ -63,6 +64,8 @@ public class News extends BaseEntity {
     public enum NewsStatus {
         FAKE, NOT_FAKE, UNDECIDED
     }
+
+    @Builder.Default 
     private boolean softDeleted = false;
 
     @Embeddable
@@ -92,6 +95,5 @@ public class News extends BaseEntity {
             if (getTotalVotes() == 0) return 0.0;
             return (double) notFakeVotes / getTotalVotes() * 100;
         }
-
     }
 }
