@@ -39,6 +39,12 @@
             >
               📊 Statistics
             </RouterLink>
+            <RouterLink
+                to="/register"
+                :class="navLinkClass('/register')"
+            >
+              👨🏿 Account
+            </RouterLink>
           </div>
         </div>
 
