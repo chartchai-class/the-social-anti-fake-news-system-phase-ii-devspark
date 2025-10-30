@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.Instant;
 
 /**
  * News entity representing news articles
@@ -45,6 +46,7 @@ public class News extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
+    private Instant createdAt = Instant.now();
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
@@ -61,6 +63,7 @@ public class News extends BaseEntity {
     public enum NewsStatus {
         FAKE, NOT_FAKE, UNDECIDED
     }
+    private boolean softDeleted = false;
 
     @Embeddable
     @Data
@@ -89,5 +92,6 @@ public class News extends BaseEntity {
             if (getTotalVotes() == 0) return 0.0;
             return (double) notFakeVotes / getTotalVotes() * 100;
         }
+
     }
 }

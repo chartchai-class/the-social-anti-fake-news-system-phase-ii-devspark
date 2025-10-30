@@ -18,7 +18,6 @@ const routes = [
   { path: '/register', component: Register },
   { path: '/admin', component: AdminPanel }
 ]
-
 const router = createRouter({
   history: createWebHashHistory(),
   routes
