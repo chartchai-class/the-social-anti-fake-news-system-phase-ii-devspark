@@ -18,35 +18,33 @@
 
     <div class="flex flex-col flex-grow justify-between">
       <div>
-        <h2 class="text-xl font-semibold mb-2 text-gray-900 line-clamp-2 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
-
-        <p class="text-sm text-gray-600 line-clamp-3 mb-4">{{ news.shortDetail }}</p>
+        <!-- BIG, BOLD TITLE -->
+        <h2 class="text-2xl font-extrabold mb-2 text-gray-900 line-clamp-2 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
+        <p class="text-sm text-gray-600 line-clamp-3 mb-2">{{ news.shortDetail }}</p>
       </div>
 
-      <div class="mt-auto">
-        <div class="flex items-center justify-between text-xs text-gray-500 border-t border-gray-100 pt-3 mb-3">
-              <span class="flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                </svg>
-                {{ news.reporter }}
-              </span>
-          <span class="flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                {{ formatDate(news.dateTime) }}
-              </span>
-        </div>
-
+      <!-- BOLD, BIG, COLORED STATUS + prominent votes -->
+      <div class="flex items-center gap-4 mb-2">
         <span
-            :class="['inline-block px-3 py-1 text-xs rounded-full font-bold uppercase tracking-wider text-center',
-              news.status === 'fake' ? 'bg-red-100 text-red-700' :
-              news.status === 'notFake' ? 'bg-green-100 text-green-700' :
-              'bg-yellow-100 text-yellow-700']"
+          :class="[
+            'text-4xl font-extrabold uppercase',
+            news.status === 'fake' ? 'text-red-600' :
+            news.status === 'notFake' ? 'text-green-600' :
+            'text-yellow-600'
+          ]"
         >
-              {{ news.status === 'fake' ? 'Fake' : news.status === 'notFake' ? 'Real' : 'Undecided' }}
-            </span>
+          {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
+        </span>
+        <span class="text-2xl font-bold flex gap-2">
+          <span class="text-red-600 flex items-center"><span class="text-lg mr-1">🚫</span>{{ (news.votes && news.votes.fake) || 0 }}</span>
+          | 
+          <span class="text-green-600 flex items-center"><span class="text-lg mr-1">✅</span>{{ (news.votes && news.votes.notFake) || 0 }}</span>
+        </span>
+      </div>
+      <!-- Reporter/Time as before, clean -->
+      <div class="border-t border-gray-100 pt-2 mt-1">
+        <div class="text-xs text-gray-700"><span class="font-semibold">Reporter:</span> {{ news.reporter }}</div>
+        <div class="text-xs text-gray-500"><span class="font-semibold">Time Report:</span> {{ formatDate(news.dateTime) }}</div>
       </div>
     </div>
   </div>

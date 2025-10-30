@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: color var(--transition-fast);
 }
 
-p, span, a {
+p, a {
   font-weight: 400;
   color: var(--text-secondary);
 }

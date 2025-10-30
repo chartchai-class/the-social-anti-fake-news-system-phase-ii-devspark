@@ -22,47 +22,52 @@
           <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 
           <!-- Status Badge -->
-          <div class="absolute top-6 right-6">
+          <div class="absolute top-6 right-6 flex items-center gap-4">
             <span :class="[
-              'px-4 py-2 rounded-full text-sm font-bold shadow-lg',
-              news.status === 'fake' ? 'bg-blue-700 text-white' :
-              news.status === 'notFake' ? 'bg-blue-600 text-white' :
-              'bg-blue-400 text-white'
+              'px-8 py-4 rounded-full text-4xl font-extrabold shadow-lg',
+              news.status === 'fake' ? 'bg-red-100 text-red-700' :
+              news.status === 'notFake' ? 'bg-green-100 text-green-700' :
+              'bg-yellow-50 text-yellow-700'
             ]">
-              {{ news.status === 'fake' ? 'Fake News' : news.status === 'notFake' ? 'Real News' : 'Undecided' }}
+              {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
+            </span>
+            <span class="text-2xl text-gray-800 font-bold bg-gray-100 rounded-full px-4 py-2">
+              🚫 {{ news.votes?.fake || 0 }} | ✅ {{ news.votes?.notFake || 0 }}
             </span>
           </div>
 
-          <!-- Title Overlay -->
+          <!-- News Title Overlay with BOLD, COLORED STATUS and BOLD VOTES -->
           <div class="absolute bottom-6 left-6 right-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
+            <h1 class="text-5xl font-extrabold text-white mb-3 leading-tight shadow-md">
               {{ news.title }}
             </h1>
+            <div class="flex items-center gap-4 mb-2">
+              <span
+                :class="[
+                  'text-4xl font-extrabold uppercase',
+                  news.status === 'fake' ? 'text-red-500 bg-white/90 px-4 py-1 rounded' :
+                  news.status === 'notFake' ? 'text-green-600 bg-white/90 px-4 py-1 rounded' :
+                  'text-yellow-600 bg-white/90 px-4 py-1 rounded'
+                ]"
+              >
+                {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
+              </span>
+              <span class="text-2xl font-bold flex gap-2 bg-white/90 px-4 py-1 rounded">
+                <span class="text-red-600 flex items-center"><span class="text-lg mr-1">🚫</span>{{ news.votes?.fake || 0 }}</span>
+                |
+                <span class="text-green-600 flex items-center"><span class="text-lg mr-1">✅</span>{{ news.votes?.notFake || 0 }}</span>
+              </span>
+            </div>
           </div>
         </div>
 
         <!-- Content -->
         <div class="p-8">
-          <!-- Meta Information -->
-          <div class="flex flex-wrap items-center gap-6 mb-8 text-sm text-gray-600">
-            <div class="flex items-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
-              <span class="font-medium">By {{ news.reporter }}</span>
-            </div>
-            <div class="flex items-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-              <span>{{ formatDate(news.dateTime) }}</span>
-            </div>
-            <div class="flex items-center">
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
-              </svg>
-              <span>{{ news.comments.length }} comments</span>
-            </div>
+          <!-- Meta Information with clear labels DOWN BELOW, not too bold/large -->
+          <div class="flex flex-wrap items-center gap-8 mb-8 mt-10 text-base text-gray-700">
+            <div><span class="font-medium">Reporter:</span> {{ news.reporter }}</div>
+            <div><span class="font-medium">Time Report:</span> {{ formatDate(news.dateTime) }}</div>
+            <div class="text-gray-600">{{ news.comments.length }} comments</div>
           </div>
 
           <!-- Vote Statistics -->
