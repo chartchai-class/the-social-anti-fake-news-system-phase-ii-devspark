@@ -247,7 +247,7 @@ textarea:focus {
 /* -----------------------
    Dark Mode Support
 ------------------------ */
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --bg-soft: #1e293b;
     --card-bg: #273449;
