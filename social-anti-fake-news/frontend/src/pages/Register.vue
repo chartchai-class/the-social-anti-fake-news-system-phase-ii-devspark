@@ -1,36 +1,36 @@
 <template>
-  <div class="container">
-    <div class="card" style="max-width:720px;margin:1rem auto;">
-      <h2>Register</h2>
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 my-4">
+      <h2 class="text-2xl font-bold mb-4">Register</h2>
 
-      <div class="form-row">
-        <label>Username *</label>
-        <input v-model="form.username" class="input" />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Username *</label>
+        <input v-model="form.username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
-      <div class="form-row">
-        <label>Email *</label>
-        <input v-model="form.email" class="input" type="email" />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+        <input v-model="form.email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" />
       </div>
 
-      <div class="form-row">
-        <label>Password *</label>
-        <input v-model="form.password" class="input" type="password" />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+        <input v-model="form.password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="password" />
       </div>
 
-      <div class="form-row">
-        <label>Confirm Password *</label>
-        <input v-model="form.confirmPassword" class="input" type="password" />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Confirm Password *</label>
+        <input v-model="form.confirmPassword" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" type="password" />
       </div>
 
-      <div class="form-row">
-        <label>Display name</label>
-        <input v-model="form.displayName" class="input" />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Display name</label>
+        <input v-model="form.displayName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
       </div>
 
-      <div class="form-row">
-        <label>Profile image (URL)</label>
-        <input v-model="form.image" class="input" placeholder="/images/avatar1.jpg or https://..." />
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Profile image (URL)</label>
+        <input v-model="form.image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="/images/avatar1.jpg or https://..." />
       </div>
 
       <div v-if="form.image" style="margin-bottom:.6rem">
@@ -38,12 +38,12 @@
         <img :src="form.image" alt="preview" style="width:80px;height:80px;border-radius:8px;object-fit:cover;" />
       </div>
 
-      <div style="display:flex;gap:.5rem">
-        <button class="btn btn-primary" @click="submit">Register</button>
-        <router-link class="btn btn-ghost" to="/">Cancel</router-link>
+      <div class="flex gap-2">
+        <button class="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow" @click="submit">Register</button>
+        <router-link class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold border border-gray-300" to="/">Cancel</router-link>
       </div>
 
-      <p style="margin-top:.6rem;color:#475569;font-size:.9rem">Already have an account? <router-link to="/">Sign in</router-link></p>
+      <p class="mt-2 text-slate-600 text-sm">Already have an account? <router-link to="/" class="text-blue-600 hover:underline">Sign in</router-link></p>
     </div>
   </div>
 </template>

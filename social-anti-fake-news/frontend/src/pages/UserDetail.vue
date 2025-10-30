@@ -1,7 +1,7 @@
 <!-- frontend/src/pages/UserDetail.vue -->
 <template>
-  <div class="container">
-    <div class="card" style="max-width:720px;margin:1rem auto">
+  <div class="max-w-2xl mx-auto px-4">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 my-4">
       <div style="display:flex;gap:1rem;align-items:center">
         <img :src="user.imageUrl || '/images/avatar-default.png'" style="width:120px;height:120px;border-radius:12px;object-fit:cover" />
         <div>
@@ -10,7 +10,7 @@
           <div class="kv">Email: {{ user.email }}</div>
           <div class="kv">Role: {{ user.role }}</div>
           <div style="margin-top:.6rem">
-            <button v-if="canEdit" class="btn btn-primary" @click="becomeMember">Upgrade to Member (demo)</button>
+            <button v-if="canEdit" class="px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow" @click="becomeMember">Upgrade to Member (demo)</button>
           </div>
         </div>
       </div>

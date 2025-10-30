@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
-      <h2>Admin Panel</h2>
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-2xl font-bold">Admin Panel</h2>
       <div>
-        <button class="btn btn-ghost" @click="refresh">Refresh</button>
+        <button class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300" @click="refresh">Refresh</button>
       </div>
     </div>
 
-    <div class="card" style="margin-bottom:1rem">
-      <h3>Users</h3>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-4">
+      <h3 class="text-xl font-semibold mb-2">Users</h3>
       <table style="width:100%">
         <thead><tr><th>Username</th><th>Email</th><th>Role</th><th></th></tr></thead>
         <tbody>
@@ -17,16 +17,16 @@
           <td>{{u.email}}</td>
           <td>{{u.role}}</td>
           <td style="text-align:right">
-            <button v-if="u.role!=='ADMIN'" class="btn btn-primary" @click="upgrade(u.id)">Make Admin</button>
-            <button v-else class="btn btn-ghost" @click="downgrade(u.id)">Revoke</button>
+            <button v-if="u.role!=='ADMIN'" class="px-3 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow" @click="upgrade(u.id)">Make Admin</button>
+            <button v-else class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300" @click="downgrade(u.id)">Revoke</button>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="card" style="margin-bottom:1rem">
-      <h3>All News (including removed)</h3>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-4">
+      <h3 class="text-xl font-semibold mb-3">All News (including removed)</h3>
       <div v-for="n in allNews" :key="n.id" class="card" style="margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem">
         <img :src="n.image||'/images/image1.jpg'" style="width:80px;height:60px;object-fit:cover;border-radius:6px" />
         <div style="flex:1">
@@ -34,22 +34,22 @@
           <div class="kv">{{n.reporter}} • {{formatDate(n.createdAt)}}</div>
         </div>
         <div style="display:flex;gap:.4rem">
-          <button class="btn btn-ghost" @click="toggleRemove(n)">{{ n.softDeleted ? 'Restore' : 'Remove' }}</button>
-          <router-link :to="`/news/${n.id}`" class="btn">Open</router-link>
+          <button class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300" @click="toggleRemove(n)">{{ n.softDeleted ? 'Restore' : 'Remove' }}</button>
+          <router-link :to="`/news/${n.id}`" class="px-3 py-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50">Open</router-link>
         </div>
       </div>
     </div>
 
-    <div class="card">
-      <h3>Comments (removed)</h3>
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+      <h3 class="text-xl font-semibold mb-2">Comments (removed)</h3>
       <div v-for="n in newsWithRemovedComments" :key="n.id" class="card" style="margin-bottom:.6rem">
         <div style="font-weight:600">{{n.title}}</div>
         <div v-for="c in n.comments.filter(x => x.softDeleted)" :key="c.id" style="border-top:1px dashed #e6eef8;padding:.6rem">
           <div class="kv"><strong>{{c.author}}</strong> • {{formatDate(c.createdAt)}}</div>
           <p style="margin-top:.4rem">{{c.text}}</p>
           <div style="display:flex;gap:.4rem;justify-content:flex-end">
-            <button class="btn btn-ghost" @click="restoreComment(n.id, c.id)">Restore</button>
-            <button class="btn" @click="hardDeleteComment(n.id, c.id)">Delete</button>
+            <button class="px-3 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300" @click="restoreComment(n.id, c.id)">Restore</button>
+            <button class="px-3 py-2 rounded-full bg-white border border-gray-300 hover:bg-gray-50" @click="hardDeleteComment(n.id, c.id)">Delete</button>
           </div>
         </div>
       </div>

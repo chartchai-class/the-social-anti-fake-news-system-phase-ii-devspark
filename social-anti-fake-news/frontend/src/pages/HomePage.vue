@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen overflow-x-hidden box-border">
-    <div class="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 py-8 box-border">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 box-border">
       <!-- Search Bar -->
       <div class="max-w-2xl mx-auto mb-8 px-2 box-border">
         <div class="relative overflow-hidden">
