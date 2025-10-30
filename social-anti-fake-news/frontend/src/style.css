@@ -48,29 +48,31 @@ body {
 }
 
 /* -----------------------
-   Typography
+   Typography (in Tailwind base layer so utilities override)
 ------------------------ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.5em;
-  transition: color var(--transition-fast);
-}
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5em;
+    transition: color var(--transition-fast);
+  }
 
-p, a {
-  font-weight: 400;
-  color: var(--text-secondary);
-}
+  p, a {
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
 
-a:hover { color: var(--accent-hover); }
-a:active { color: var(--accent-active); }
+  a:hover { color: var(--accent-hover); }
+  a:active { color: var(--accent-active); }
+}
 
 /* -----------------------
    Buttons
@@ -500,5 +502,27 @@ img:hover {
   transform: scale(1.02);
 }
 
+/* Content images inside prose */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  max-height: 28rem; /* ~448px */
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* General preventive max-height for large banner images */
+img.full-width-banner {
+  width: 100%;
+  max-height: 24rem;
+  object-fit: cover;
+}
+
 /* Removed fixed responsive overrides that constrained all images globally */
+
+/* Strong color helpers (guaranteed with !important) */
+.text-fake { color: #dc2626 !important; }
+.text-real { color: #16a34a !important; }
+.text-undecided { color: #ca8a04 !important; }
+.font-extra { font-weight: 800 !important; }
 

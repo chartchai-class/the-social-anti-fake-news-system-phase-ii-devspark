@@ -1,26 +1,25 @@
 <template>
   <nav class="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50">
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="flex justify-between items-center h-16">
-
-        <RouterLink to="/" class="flex items-center space-x-3 group transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#639FFF] rounded-lg">
+    <div class="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6">
+      <div class="flex justify-between items-center h-14">
+        <!-- Logo - smaller on mobile -->
+        <RouterLink to="/" class="flex items-center space-x-2 group transition-opacity duration-200 hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#639FFF] rounded-lg">
           <div class="flex-shrink-0">
-            <div class="w-10 h-10 bg-gradient-to-r from-[#639FFF] to-primary-dark rounded-xl flex items-center justify-center shadow-md">
-              <span class="text-white font-bold text-xl"></span>
+            <div class="w-8 h-8 bg-gradient-to-r from-[#639FFF] to-primary-dark rounded-lg flex items-center justify-center shadow-md">
+              <span class="text-white font-bold text-sm">AF</span>
             </div>
           </div>
           <div>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-primary-gradient tracking-wide transition-opacity duration-200">
+            <h1 class="text-lg sm:text-xl font-extrabold text-primary-gradient tracking-wide transition-opacity duration-200">
               Anti-Fake News
             </h1>
             <p class="text-xs text-gray-500 hidden sm:block">Truth Matters</p>
           </div>
         </RouterLink>
 
+        <!-- Desktop Navigation - reduced spacing -->
         <div class="hidden md:block">
-          <div class="flex items-center space-x-6">
+          <div class="flex items-center space-x-4">
             <RouterLink
                 to="/"
                 :class="navLinkClass('/')"
@@ -42,16 +41,16 @@
           </div>
         </div>
 
+        <!-- Mobile Menu Button -->
         <div class="md:hidden">
           <button
               @click="toggleMobileMenu"
-              class="inline-flex items-center justify-center p-2 rounded-md bg-primary text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary transition-colors shadow-md space-x-2 hover:bg-primary-dark"
+              class="inline-flex items-center justify-center p-2 rounded-md bg-primary text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary transition-colors shadow-md hover:bg-primary-dark"
               :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
               aria-controls="mobile-menu"
           >
-            <span class="text-sm font-bold text-white" style="color: white !important;">{{ mobileMenuOpen ? 'Close' : 'Menu' }}</span>
-
-            <svg class="h-6 w-6 stroke-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <span class="text-sm font-bold text-white">{{ mobileMenuOpen ? 'Close' : 'Menu' }}</span>
+            <svg class="h-5 w-5 ml-1 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               <path v-else stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -103,9 +102,9 @@ const closeMobileMenu = () => {
   mobileMenuOpen.value = false
 }
 
-// Utility function for desktop link classes
+// Utility function for desktop link classes - smaller padding
 const navLinkClass = (path) => [
-  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-[1.03]',
+  'px-2 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-[1.03]',
   route.path === path
       ? 'bg-primary/20 text-primary-dark font-bold'
       : 'text-gray-600 hover:text-primary hover:bg-primary/10'

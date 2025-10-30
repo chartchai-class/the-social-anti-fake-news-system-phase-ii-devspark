@@ -1,28 +1,32 @@
 <template>
-  <div class="min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="min-h-screen overflow-x-hidden box-border">
+    <div class="max-w-5xl mx-auto px-3 sm:px-4 lg:px-6 py-8 box-border">
       <!-- Search Bar -->
-      <div class="max-w-3xl mx-auto mb-8">
-        <div class="relative">
+      <div class="max-w-2xl mx-auto mb-8 px-2 box-border">
+        <div class="relative overflow-hidden">
           <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search news articles by title, detail, or reporter..."
-              class="w-full px-5 py-3 text-gray-900 rounded-full shadow-lg border border-gray-300 focus:outline-none focus:ring-4 focus:ring-[#8BB8FF] text-base transition-shadow"
+            v-model="searchQuery"
+            type="text"
+            placeholder="Search news articles by title, detail, or reporter..."
+            class="w-full box-border px-5 py-3 text-gray-900 rounded-full shadow-lg border border-gray-300 focus:outline-none focus:ring-4 focus:ring-[#8BB8FF] text-base transition-shadow"
           />
           <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
-            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg
+              class="w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
               ></path>
             </svg>
           </div>
         </div>
       </div>
-
       <!-- Filters -->
       <div class="flex flex-col gap-4 mb-6">
         <div class="flex flex-wrap items-center gap-3 py-1">
@@ -62,13 +66,13 @@
                   class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm"
               >
                 <span>Fake</span>
-                <span class="text-red-600 font-semibold">{{ fakeNewsCount }}</span>
+                <span class="text-fake font-semibold">{{ fakeNewsCount }}</span>
               </div>
               <div
                   class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm"
               >
-                <span>Real</span>
-                <span class="text-green-600 font-semibold">{{ realNewsCount }}</span>
+                <span>Real</span>  <span class="text-real font-semibold">{{ realNewsCount }}</span>
+              
               </div>
             </div>
           </div>
