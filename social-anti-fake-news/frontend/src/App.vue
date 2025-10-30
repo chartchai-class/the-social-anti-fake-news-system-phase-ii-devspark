@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-900">
     <Navbar />
     <main class="min-h-screen">
-      <router-view /> <-- HomePage.vue loads here, BELOW the Navbar -->
+      <router-view />
     </main>
   </div>
 </template>

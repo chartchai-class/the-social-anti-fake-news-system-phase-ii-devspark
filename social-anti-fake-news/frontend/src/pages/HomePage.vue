@@ -51,11 +51,11 @@
 
             <div class="hidden md:flex flex-wrap gap-3">
               <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
-                <span>🚫 Fake</span>
+                <span>Fake</span>
                 <span class="text-red-600 font-semibold">{{ fakeNewsCount }}</span>
               </div>
               <div class="flex items-center gap-2 bg-white border border-primary/20 rounded-full px-4 py-2 shadow text-sm">
-                <span>✅ Real</span>
+                <span>Real</span>
                 <span class="text-green-600 font-semibold">{{ realNewsCount }}</span>
               </div>
             </div>

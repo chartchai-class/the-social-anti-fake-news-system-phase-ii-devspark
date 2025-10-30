@@ -65,7 +65,7 @@ public class News extends BaseEntity {
         FAKE, NOT_FAKE, UNDECIDED
     }
 
-    @Builder.Default 
+    @Builder.Default
     private boolean softDeleted = false;
 
     @Embeddable
