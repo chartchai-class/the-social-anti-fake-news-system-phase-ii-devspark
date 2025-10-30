@@ -121,14 +121,13 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
 import NewsCard from '../components/NewsCard.vue'
-import {useAuthStore} from "../store/authStore.js";
 
 // Configure NProgress
 NProgress.configure({ showSpinner: false, speed: 500, minimum: 0.1 })
 
 const store = useNewsStore()
 const router = useRouter()
-const auth = useAuthStore()
+//const auth = useAuthStore()
 
 const filter = ref('all')
 const searchQuery = ref('')
