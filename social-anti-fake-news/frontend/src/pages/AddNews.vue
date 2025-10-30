@@ -8,6 +8,7 @@
           Submit a new article to the community — include title, summary, details, and an image.
         </p>
       </div>
+
     </header>
 
     <!-- Main Content -->
@@ -97,6 +98,7 @@
         <p class="text-gray-700 mb-4">{{ shortDetail || 'Short summary will appear here.' }}</p>
         <p class="text-gray-600">{{ detail || 'Full details preview will appear here.' }}</p>
       </div>
+
     </main>
   </div>
 </template>
@@ -150,6 +152,8 @@ const addSchema = yup.object({
   shortDetail: yup.string().required('Short detail required').min(10,'Min 10 chars'),
   detail: yup.string().required('Detail required').min(20,'Min 20 chars')
 })
+
+
 </script>
 
 <style scoped>

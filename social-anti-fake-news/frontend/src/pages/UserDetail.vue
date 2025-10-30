@@ -31,14 +31,13 @@ export default {
     const user = computed(() => auth.findUserById(userId) || (auth.user && auth.user.id == userId ? auth.user : null) )
 
     function becomeMember(){
-      // This is a demo action: in real app call backend endpoint for payment/approval
       if(confirm('Make this user a MEMBER? (demo)')){
         auth.upgradeUserToMember(user.value.id)
         alert('Upgraded to MEMBER (mock).')
       }
     }
 
-    const canEdit = true // you can condition this to admin only or owner
+    const canEdit = true
 
     return { user, canEdit, becomeMember }
   }
