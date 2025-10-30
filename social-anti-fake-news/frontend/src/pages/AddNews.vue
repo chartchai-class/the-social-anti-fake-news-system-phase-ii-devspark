@@ -105,7 +105,8 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import { useAuthStore } from '../store/authStore'
+const auth = useAuthStore()
 const title = ref('')
 const shortDetail = ref('')
 const detail = ref('')
@@ -116,6 +117,11 @@ const handleImageError = () => {
 }
 
 const submitNews = async () => {
+  if(!auth.isMember){
+    alert('Only MEMBER users can post news. Request admin to upgrade your account.')
+    return
+  }
+
   try {
     await addSchema.validate({
       title: title.value,
