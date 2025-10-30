@@ -24,10 +24,10 @@
       </div>
 
       <!-- BOLD, BIG, COLORED STATUS + prominent votes -->
-      <div class="flex items-center gap-2 mb-2">
+      <div class="flex items-baseline flex-wrap gap-3 mb-2">
         <span
           :class="[
-            'uppercase font-extra text-5xl leading-none',
+            'uppercase font-extra text-4xl md:text-5xl leading-none',
             news.status === 'fake' ? 'text-fake' :
             news.status === 'notFake' ? 'text-real' :
             'text-undecided'
@@ -35,10 +35,10 @@
         >
           {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
         </span>
-        <span class="text-xl md:text-2xl font-extra flex gap-2 ml-2">
-          <span class="text-fake flex items-center"><span class="text-lg mr-1">🚫</span>{{ (news.votes && news.votes.fake) || 0 }}</span>
-          | 
-          <span class="text-real flex items-center"><span class="text-lg mr-1">✅</span>{{ (news.votes && news.votes.notFake) || 0 }}</span>
+        <span class="text-lg md:text-2xl font-extra flex items-center gap-4 ml-1 whitespace-nowrap">
+          <span class="text-fake flex items-center gap-1"><span class="text-lg">🚫</span>{{ (news.votes && news.votes.fake) || 0 }}</span>
+          <span class="text-gray-300">|</span>
+          <span class="text-real flex items-center gap-1"><span class="text-lg">✅</span>{{ (news.votes && news.votes.notFake) || 0 }}</span>
         </span>
       </div>
       <!-- Reporter/Time as before, clean -->

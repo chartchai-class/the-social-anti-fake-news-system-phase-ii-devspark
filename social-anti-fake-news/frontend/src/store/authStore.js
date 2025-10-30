@@ -16,7 +16,7 @@ export const useAuthStore = defineStore('auth', {
     },
     actions: {
         save() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(this.user))
+            localStorage.setItem(AUTH_KEY, JSON.stringify(this.user))
             localStorage.setItem(USERS_KEY, JSON.stringify(this.users))
         },
         addMockUsersIfEmpty(){

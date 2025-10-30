@@ -18,8 +18,7 @@
         </RouterLink>
 
         <!-- Desktop Navigation - reduced spacing -->
-        <div class="hidden md:block">
-          <div class="flex items-center space-x-4">
+        <div class="hidden md:flex items-center space-x-4">
             <RouterLink
                 to="/"
                 :class="navLinkClass('/')"
@@ -27,6 +26,7 @@
               🏠 Home
             </RouterLink>
             <RouterLink
+                v-if="auth.isMember"
                 to="/addNews"
                 :class="navLinkClass('/addNews')"
             >
@@ -38,8 +38,30 @@
             >
               📊 Statistics
             </RouterLink>
+            <template v-if="!auth.isLoggedIn">
+              <RouterLink to="/login" :class="navLinkClass('/login')">Login</RouterLink>
+              <RouterLink to="/register" :class="navLinkClass('/register')">Sign up</RouterLink>
+            </template>
+            <div v-else class="relative">
+              <button @click="profileOpen = !profileOpen" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg hover:bg-primary/10">
+                <img :src="auth.user.imageUrl || '/images/avatar-default.png'" class="w-7 h-7 rounded-full object-cover" />
+                <span class="text-sm font-medium text-gray-700">{{ auth.user.name }}</span>
+                <svg class="w-4 h-4 text-gray-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.25 8.29a.75.75 0 01-.02-1.08z" clip-rule="evenodd"/></svg>
+              </button>
+              <div v-if="profileOpen" class="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
+                <RouterLink :to="`/user/${auth.user.id}`" class="block px-3 py-2 text-sm hover:bg-gray-50">Profile</RouterLink>
+                <RouterLink :to="{ path: '/', query: { me: '1' } }" class="block px-3 py-2 text-sm hover:bg-gray-50">My News</RouterLink>
+                <button @click="logout" class="block w-full text-left px-3 py-2 text-sm hover:bg-gray-50">Logout</button>
+              </div>
+            </div>
+            <RouterLink
+                v-if="auth.isAdmin"
+                to="/admin"
+                :class="navLinkClass('/admin')"
+            >
+              🛠 Admin
+            </RouterLink>
           </div>
-        </div>
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden">
@@ -68,6 +90,7 @@
             🏠 Home
           </RouterLink>
           <RouterLink
+              v-if="auth.isMember"
               to="/addNews"
               @click="closeMobileMenu"
               :class="mobileNavLinkClass('/addNews')"
@@ -81,6 +104,16 @@
           >
             📊 Statistics
           </RouterLink>
+          <RouterLink v-if="!auth.isLoggedIn" to="/login" @click="closeMobileMenu" :class="mobileNavLinkClass('/login')">Login</RouterLink>
+          <RouterLink v-if="!auth.isLoggedIn" to="/register" @click="closeMobileMenu" :class="mobileNavLinkClass('/register')">Sign up</RouterLink>
+          <RouterLink
+              v-if="auth.isAdmin"
+              to="/admin"
+              @click="closeMobileMenu"
+              :class="mobileNavLinkClass('/admin')"
+          >
+            🛠 Admin
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -90,9 +123,12 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
+import { useAuthStore } from '../store/authStore'
 
 const route = useRoute()
 const mobileMenuOpen = ref(false)
+const profileOpen = ref(false)
+const auth = useAuthStore()
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
@@ -100,6 +136,11 @@ const toggleMobileMenu = () => {
 
 const closeMobileMenu = () => {
   mobileMenuOpen.value = false
+}
+
+function logout(){
+  auth.logout()
+  profileOpen.value = false
 }
 
 // Utility function for desktop link classes - smaller padding

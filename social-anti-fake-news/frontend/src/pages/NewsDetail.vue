@@ -20,7 +20,7 @@
         </div>
         <!-- Big, colored status & votes -->
         <div class="flex flex-col items-center gap-4 mt-6">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-4">
             <span :class="[
                 'px-6 py-2 rounded-full uppercase font-extra text-5xl',
                 news.status === 'fake' ? 'bg-red-100 text-fake' :
@@ -29,10 +29,10 @@
               ]">
               {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
             </span>
-            <span class="text-3xl font-extra flex gap-2 bg-gray-50 px-4 py-2 rounded ml-2">
-              <span class="text-fake flex items-center"><span class="text-2xl mr-1">🚫</span>{{ news.votes?.fake || 0 }}</span>
-              |
-              <span class="text-real flex items-center"><span class="text-2xl mr-1">✅</span>{{ news.votes?.notFake || 0 }}</span>
+            <span class="text-3xl font-extra flex items-center gap-5 bg-gray-50 px-4 py-2 rounded">
+              <span class="text-fake flex items-center gap-2"><span class="text-2xl">🚫</span>{{ news.votes?.fake || 0 }}</span>
+              <span class="text-gray-300">|</span>
+              <span class="text-real flex items-center gap-2"><span class="text-2xl">✅</span>{{ news.votes?.notFake || 0 }}</span>
             </span>
           </div>
         </div>
