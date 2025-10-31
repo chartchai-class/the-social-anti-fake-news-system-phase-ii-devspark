@@ -124,6 +124,19 @@
         </div>
       </div>
 
+      <!-- Or Upload Image File -->
+      <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Or upload image file</label>
+        <input 
+          type="file"
+          accept="image/*"
+          @change="onFileChange"
+          class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-all border-gray-300 focus:ring-blue-500 bg-white"
+        />
+        <p v-if="uploadError" class="mt-1 text-sm text-red-600">{{ uploadError }}</p>
+        <p v-if="selectedFileName" class="mt-1 text-xs text-gray-500">Selected: {{ selectedFileName }}</p>
+      </div>
+
       <!-- Error Summary -->
       <div v-if="errors.general" class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
         <div class="flex">
@@ -163,7 +176,7 @@ import { ref, reactive } from 'vue'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
-import { voteService, commentService } from '../services/supabase'
+import { voteService, commentService, storageService } from '../services/supabase'
 
 const newsStore = useNewsStore()
 const auth = useAuthStore()
@@ -172,6 +185,9 @@ const props = defineProps({ newsId: Number })
 
 const isSubmitting = ref(false)
 const errors = reactive({})
+const selectedFile = ref(null)
+const selectedFileName = ref('')
+const uploadError = ref('')
 
 const form = reactive({
   voteType: '',
@@ -224,11 +240,23 @@ async function submitVote() {
       voteType: form.voteType === 'fake' ? 'FAKE' : 'NOT_FAKE'
     })
 
+    // If a file is selected, upload first to Supabase Storage
+    let imageUrl = form.imageUrl.trim()
+    if (selectedFile.value) {
+      try {
+        const { publicUrl } = await storageService.uploadImage(selectedFile.value, { bucket: 'images', folder: 'comments' })
+        imageUrl = publicUrl
+      } catch (e) {
+        uploadError.value = e.message || 'Image upload failed'
+        throw e
+      }
+    }
+
     await commentService.createComment({
       newsId: props.newsId,
       userId: auth.user.id,
       text: form.commentText.trim(),
-      imageUrl: form.imageUrl.trim() || null,
+      imageUrl: imageUrl || null,
       voteType: form.voteType === 'fake' ? 'FAKE' : 'NOT_FAKE'
     })
 
@@ -246,6 +274,8 @@ async function submitVote() {
     form.userName = ''
     form.commentText = ''
     form.imageUrl = ''
+    selectedFile.value = null
+    selectedFileName.value = ''
 
     alert('✅ Your opinion has been submitted successfully!')
     
@@ -264,6 +294,17 @@ async function submitVote() {
 
 function handleImageError(event) {
   event.target.style.display = 'none'
+}
+
+function onFileChange(e) {
+  const file = e.target.files?.[0]
+  if (file) {
+    selectedFile.value = file
+    selectedFileName.value = file.name
+  } else {
+    selectedFile.value = null
+    selectedFileName.value = ''
+  }
 }
 </script>
 

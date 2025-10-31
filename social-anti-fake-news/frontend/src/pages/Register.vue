@@ -284,7 +284,7 @@ async function submit() {
       .from('profiles')
       .select('id')
       .eq('username', form.username.toLowerCase().trim())
-      .single()
+      .maybeSingle()
     
     if (existingUsername) {
       errors.username = 'Username already taken'
@@ -297,7 +297,7 @@ async function submit() {
       .from('profiles')
       .select('id')
       .eq('email', form.email.toLowerCase().trim())
-      .single()
+      .maybeSingle()
     
     if (existingEmail) {
       errors.email = 'Email already registered'
@@ -349,5 +349,5 @@ function handleImageError(event) {
 </script>
 
 <style scoped>
-/* Additional custom styles if needed */
+
 </style>

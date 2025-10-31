@@ -115,6 +115,21 @@
             </div>
           </div>
 
+          <!-- Or Upload Image File -->
+          <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">
+              Or upload image file (stored in Supabase)
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              @change="onFileChange"
+              class="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 transition-all border-gray-300 focus:ring-blue-500 bg-white"
+            />
+            <p v-if="uploadError" class="mt-1 text-sm text-red-600">{{ uploadError }}</p>
+            <p v-if="selectedFileName" class="mt-1 text-xs text-gray-500">Selected: {{ selectedFileName }}</p>
+          </div>
+
           <!-- Error Summary -->
           <div v-if="errors.general" class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
             <div class="flex">
@@ -187,7 +202,7 @@ import { useRouter } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
-import { newsService } from '../services/supabase'
+import { newsService, storageService } from '../services/supabase'
 
 const router = useRouter()
 const newsStore = useNewsStore()
@@ -195,6 +210,9 @@ const auth = useAuthStore()
 
 const isSubmitting = ref(false)
 const errors = reactive({})
+const selectedFile = ref(null)
+const selectedFileName = ref('')
+const uploadError = ref('')
 
 const form = reactive({
   title: '',
@@ -231,6 +249,7 @@ const newsSchema = yup.object({
 async function submitNews() {
   // Clear previous errors
   Object.keys(errors).forEach(key => delete errors[key])
+  uploadError.value = ''
   
   // Check permissions
   if (!auth.isMember && !auth.isAdmin) {
@@ -244,12 +263,24 @@ async function submitNews() {
     // Validate form
     await newsSchema.validate(form, { abortEarly: false })
     
+    // If a file was selected, upload to Supabase Storage and use its public URL
+    let imageUrl = form.image.trim()
+    if (selectedFile.value) {
+      try {
+        const { publicUrl } = await storageService.uploadImage(selectedFile.value, { bucket: 'images', folder: 'news' })
+        imageUrl = publicUrl
+      } catch (e) {
+        uploadError.value = e.message || 'Image upload failed'
+        throw e
+      }
+    }
+
     // Persist to Supabase
     const created = await newsService.createNews({
       title: form.title.trim(),
       shortDetail: form.shortDetail.trim(),
       detail: form.detail.trim(),
-      image: form.image.trim() || '/images/placeholder.jpg',
+      image: imageUrl || '/images/placeholder.jpg',
       reporterId: auth.user?.id
     })
 
@@ -270,6 +301,8 @@ async function submitNews() {
     form.shortDetail = ''
     form.detail = ''
     form.image = ''
+    selectedFile.value = null
+    selectedFileName.value = ''
     
     router.push('/')
     
@@ -288,6 +321,17 @@ async function submitNews() {
 
 function handleImageError(event) {
   event.target.src = '/images/placeholder.jpg'
+}
+
+function onFileChange(e) {
+  const file = e.target.files?.[0]
+  if (file) {
+    selectedFile.value = file
+    selectedFileName.value = file.name
+  } else {
+    selectedFile.value = null
+    selectedFileName.value = ''
+  }
 }
 </script>
 

@@ -175,13 +175,14 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import NewsCard from '../components/NewsCard.vue'
+import { newsService } from '../services/supabase'
 
 // Configure NProgress
 NProgress.configure({ showSpinner: false, speed: 500, minimum: 0.1 })
@@ -196,6 +197,40 @@ const searchQuery = ref('')
 const currentPage = ref(1)
 const itemsPerPage = ref(6)
 const isLoading = ref(false)
+async function fetchNews() {
+  try {
+    isLoading.value = true
+    const items = await newsService.getAllNews({ limit: 50 })
+    const mapped = (items || []).map(n => ({
+      id: n.id,
+      title: n.title,
+      shortDetail: n.short_detail,
+      fullDetail: n.full_detail,
+      image: n.image_url || '/images/placeholder.jpg',
+      reporter: n.reporter?.full_name || n.reporter?.username || 'Anonymous',
+      reporterId: n.reporter_id,
+      createdAt: n.created_at,
+      votes: { fake: 0, notFake: 0 },
+      status: (n.status || 'UNDECIDED').toLowerCase(),
+      softDeleted: !!n.soft_deleted,
+      comments: []
+    }))
+    if (mapped.length > 0) {
+      store.newsList = mapped
+    }
+  } catch (e) {
+    console.error('Failed to load news from Supabase', e)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+onMounted(fetchNews)
+
+watch(() => auth.session, () => {
+  // re-fetch after login/logout in case visibility differs
+  fetchNews()
+})
 
 const filterOptions = [
   { label: 'All', value: 'all', icon: '📰' },

@@ -1,228 +1,129 @@
--- Supabase Database Schema for Anti-Fake News System
--- Run this SQL in your Supabase SQL Editor
+-- 1) Create database and use it
+CREATE DATABASE IF NOT EXISTS devspark CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE devspark;
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- 2) Drop old tables if they exist (optional reset)
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS votes;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS news;
+DROP TABLE IF EXISTS users;
+SET FOREIGN_KEY_CHECKS = 1;
 
--- Profiles Table (extends Supabase auth.users)
-CREATE TABLE IF NOT EXISTS profiles (
-  id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-  username VARCHAR(50) UNIQUE NOT NULL,
-  email VARCHAR(100) UNIQUE NOT NULL,
+-- 3) Create tables (aligned with JPA entities: numeric IDs, audit fields, enums)
+
+-- users
+CREATE TABLE users (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
   first_name VARCHAR(50),
   last_name VARCHAR(50),
-  full_name VARCHAR(100),
-  image_url TEXT,
-  role VARCHAR(20) DEFAULT 'READER' CHECK (role IN ('READER', 'MEMBER', 'ADMIN')),
-  is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+  is_active BOOLEAN DEFAULT TRUE,
+  role ENUM('READER','ADMIN','USER') DEFAULT 'USER',
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  version BIGINT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
--- News Table
-CREATE TABLE IF NOT EXISTS news (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+-- news (with embedded voteCount: fake_votes, not_fake_votes)
+CREATE TABLE news (
+  id BIGINT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   short_detail VARCHAR(500) NOT NULL,
   full_detail TEXT NOT NULL,
-  image_url TEXT,
-  reporter_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  status VARCHAR(20) DEFAULT 'UNDECIDED' CHECK (status IN ('FAKE', 'NOT_FAKE', 'UNDECIDED')),
-  soft_deleted BOOLEAN DEFAULT false,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+  image_url VARCHAR(500),
+  status ENUM('FAKE','NOT_FAKE','UNDECIDED') DEFAULT 'UNDECIDED',
+  reporter_id BIGINT NOT NULL,
+  soft_deleted BOOLEAN DEFAULT FALSE,
+  fake_votes INT DEFAULT 0,
+  not_fake_votes INT DEFAULT 0,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  version BIGINT NULL,
+  PRIMARY KEY (id),
+  KEY idx_news_reporter (reporter_id),
+  CONSTRAINT fk_news_reporter FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
--- Comments Table
-CREATE TABLE IF NOT EXISTS comments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  news_id UUID NOT NULL REFERENCES news(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
+-- comments
+CREATE TABLE comments (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  news_id BIGINT NOT NULL,
+  user_id BIGINT NOT NULL,
   text TEXT NOT NULL,
-  image_url TEXT,
-  vote_type VARCHAR(20) CHECK (vote_type IN ('FAKE', 'NOT_FAKE')),
-  parent_comment_id UUID REFERENCES comments(id) ON DELETE CASCADE,
-  soft_deleted BOOLEAN DEFAULT false,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+  image_url VARCHAR(500),
+  vote_type ENUM('FAKE','NOT_FAKE') NULL,
+  soft_deleted BOOLEAN DEFAULT FALSE,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  version BIGINT NULL,
+  PRIMARY KEY (id),
+  KEY idx_comments_news (news_id),
+  KEY idx_comments_user (user_id),
+  CONSTRAINT fk_comments_news FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
--- Votes Table
-CREATE TABLE IF NOT EXISTS votes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  news_id UUID NOT NULL REFERENCES news(id) ON DELETE CASCADE,
-  user_id UUID NOT NULL REFERENCES profiles(id) ON DELETE CASCADE,
-  vote_type VARCHAR(20) NOT NULL CHECK (vote_type IN ('FAKE', 'NOT_FAKE')),
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(news_id, user_id) -- One vote per user per news
-);
+-- votes (unique one vote per user per news)
+CREATE TABLE votes (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  news_id BIGINT NOT NULL,
+  user_id BIGINT NOT NULL,
+  vote_type ENUM('FAKE','NOT_FAKE') NOT NULL,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  updated_at DATETIME(6) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  version BIGINT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY uk_vote_once (news_id, user_id),
+  KEY idx_votes_news (news_id),
+  KEY idx_votes_user (user_id),
+  CONSTRAINT fk_votes_news FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_votes_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
--- Indexes for performance
-CREATE INDEX IF NOT EXISTS idx_news_reporter_id ON news(reporter_id);
-CREATE INDEX IF NOT EXISTS idx_news_status ON news(status);
-CREATE INDEX IF NOT EXISTS idx_news_soft_deleted ON news(soft_deleted);
-CREATE INDEX IF NOT EXISTS idx_news_created_at ON news(created_at DESC);
+-- 4) Seed basic data
 
-CREATE INDEX IF NOT EXISTS idx_comments_news_id ON comments(news_id);
-CREATE INDEX IF NOT EXISTS idx_comments_user_id ON comments(user_id);
-CREATE INDEX IF NOT EXISTS idx_comments_soft_deleted ON comments(soft_deleted);
+-- users
+INSERT INTO users (username, email, password, first_name, last_name, role, is_active)
+VALUES
+  ('admin', 'admin@demo.com', 'admin', 'Admin', 'User', 'ADMIN', TRUE),
+  ('reporter1', 'reporter1@demo.com', 'pass', 'Reporter', 'One', 'USER', TRUE),
+  ('reader1', 'reader1@demo.com', 'pass', 'Reader', 'One', 'READER', TRUE)
+ON DUPLICATE KEY UPDATE email=VALUES(email);
 
-CREATE INDEX IF NOT EXISTS idx_votes_news_id ON votes(news_id);
-CREATE INDEX IF NOT EXISTS idx_votes_user_id ON votes(user_id);
+-- get ids for seeds
+SET @admin_id = (SELECT id FROM users WHERE username='admin' LIMIT 1);
+SET @reporter_id = (SELECT id FROM users WHERE username='reporter1' LIMIT 1);
+SET @reader_id = (SELECT id FROM users WHERE username='reader1' LIMIT 1);
 
--- Row Level Security (RLS) Policies
+-- news
+INSERT INTO news (title, short_detail, full_detail, image_url, status, reporter_id, soft_deleted, fake_votes, not_fake_votes)
+VALUES
+  ('Aliens Landed in Bangkok', 'A mysterious light was seen over the Grand Palace.', 'Full details of the event...', '/images/image1.jpg', 'FAKE', @reporter_id, FALSE, 5, 1),
+  ('Bangkok Floods Reach New Record', 'Chao Phraya River overflowed in multiple districts.', 'Extensive flood report...', '/images/image2.jpg', 'NOT_FAKE', @reporter_id, FALSE, 1, 6)
+ON DUPLICATE KEY UPDATE title=VALUES(title);
 
--- Enable RLS
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE news ENABLE ROW LEVEL SECURITY;
-ALTER TABLE comments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE votes ENABLE ROW LEVEL SECURITY;
+SET @news1 = (SELECT id FROM news WHERE title='Aliens Landed in Bangkok' LIMIT 1);
+SET @news2 = (SELECT id FROM news WHERE title='Bangkok Floods Reach New Record' LIMIT 1);
 
--- Profiles Policies
-CREATE POLICY "Users can view all profiles"
-  ON profiles FOR SELECT
-  USING (true);
+-- votes
+INSERT INTO votes (news_id, user_id, vote_type)
+VALUES
+  (@news1, @admin_id, 'FAKE')
+ON DUPLICATE KEY UPDATE vote_type=VALUES(vote_type);
 
-CREATE POLICY "Users can update own profile"
-  ON profiles FOR UPDATE
-  USING (auth.uid() = id);
+-- comments
+INSERT INTO comments (news_id, user_id, text, vote_type)
+VALUES
+  (@news1, @admin_id, 'Looks photoshopped!', 'FAKE')
+;
 
-CREATE POLICY "Users can insert own profile"
-  ON profiles FOR INSERT
-  WITH CHECK (auth.uid() = id);
-
--- News Policies
-CREATE POLICY "Everyone can view non-deleted news"
-  ON news FOR SELECT
-  USING (soft_deleted = false OR auth.uid() IN (
-    SELECT id FROM profiles WHERE role = 'ADMIN'
-  ));
-
-CREATE POLICY "Members and Admins can create news"
-  ON news FOR INSERT
-  WITH CHECK (
-    auth.uid() IN (
-      SELECT id FROM profiles WHERE role IN ('MEMBER', 'ADMIN')
-    )
-  );
-
-CREATE POLICY "Only admins can update news"
-  ON news FOR UPDATE
-  USING (
-    auth.uid() IN (
-      SELECT id FROM profiles WHERE role = 'ADMIN'
-    )
-  );
-
--- Comments Policies
-CREATE POLICY "Everyone can view non-deleted comments"
-  ON comments FOR SELECT
-  USING (soft_deleted = false OR auth.uid() IN (
-    SELECT id FROM profiles WHERE role = 'ADMIN'
-  ));
-
-CREATE POLICY "Authenticated users can create comments"
-  ON comments FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own comments"
-  ON comments FOR UPDATE
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Only admins can soft delete comments"
-  ON comments FOR UPDATE
-  USING (
-    auth.uid() IN (
-      SELECT id FROM profiles WHERE role = 'ADMIN'
-    )
-  );
-
--- Votes Policies
-CREATE POLICY "Everyone can view votes"
-  ON votes FOR SELECT
-  USING (true);
-
-CREATE POLICY "Authenticated users can create votes"
-  ON votes FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update own votes"
-  ON votes FOR UPDATE
-  USING (auth.uid() = user_id);
-
--- Functions for automatic timestamps
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.updated_at = NOW();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
--- Triggers for updated_at
-CREATE TRIGGER update_profiles_updated_at
-  BEFORE UPDATE ON profiles
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER update_news_updated_at
-  BEFORE UPDATE ON news
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
-CREATE TRIGGER update_comments_updated_at
-  BEFORE UPDATE ON comments
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
--- Function to automatically create profile on user signup
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
-BEGIN
-  INSERT INTO public.profiles (id, email, username)
-  VALUES (
-    NEW.id,
-    NEW.email,
-    COALESCE(NEW.raw_user_meta_data->>'username', split_part(NEW.email, '@', 1))
-  );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
--- Trigger to create profile when user signs up
-CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW
-  EXECUTE FUNCTION public.handle_new_user();
-
--- Function to recalculate news status based on votes
-CREATE OR REPLACE FUNCTION recalculate_news_status(p_news_id UUID)
-RETURNS VARCHAR(20) AS $$
-DECLARE
-  v_fake_count INTEGER;
-  v_not_fake_count INTEGER;
-  v_status VARCHAR(20);
-BEGIN
-  SELECT 
-    COUNT(*) FILTER (WHERE vote_type = 'FAKE'),
-    COUNT(*) FILTER (WHERE vote_type = 'NOT_FAKE')
-  INTO v_fake_count, v_not_fake_count
-  FROM votes
-  WHERE news_id = p_news_id;
-  
-  IF v_fake_count > v_not_fake_count THEN
-    v_status := 'FAKE';
-  ELSIF v_not_fake_count > v_fake_count THEN
-    v_status := 'NOT_FAKE';
-  ELSE
-    v_status := 'UNDECIDED';
-  END IF;
-  
-  UPDATE news
-  SET status = v_status
-  WHERE id = p_news_id;
-  
-  RETURN v_status;
-END;
-$$ LANGUAGE plpgsql;
-
+-- 5) Optional: quick stats sanity check
+SELECT
+  (SELECT COUNT(*) FROM users)   AS users_count,
+  (SELECT COUNT(*) FROM news)    AS news_count,
+  (SELECT COUNT(*) FROM votes)   AS votes_count,
+  (SELECT COUNT(*) FROM comments) AS comments_count;

@@ -1,8 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Supabase configuration
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://your-project.supabase.co'
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'your-anon-key'
+const supabaseUrl = 'https://sdhltyzwejuormbcfskd.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkaGx0eXp3ZWp1b3JtYmNmc2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE4ODk1MzcsImV4cCI6MjA3NzQ2NTUzN30.yzIcs33FUbpEQEV1Nb3bFTu3ko_y6O9Ox7DeEZPbNdE'
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
@@ -12,7 +12,7 @@ export const userService = {
         async register(userData) {
             // First, sign up the user with Supabase Auth
             const { data: authData, error: authError } = await supabase.auth.signUp({
-                email: userData.email,
+                email: (userData.email || '').toLowerCase().trim(),
                 password: userData.password,
                 options: {
                     data: {
@@ -27,7 +27,7 @@ export const userService = {
             
             if (authError) throw authError
             
-            if (authData.user) {
+            if (authData.user && authData.session) {
                 
                 await new Promise(resolve => setTimeout(resolve, 500))
                 
@@ -76,14 +76,33 @@ export const userService = {
             
             if (authError) throw authError
             
-            // Get user profile
-            const { data: profile, error: profileError } = await supabase
+            // Get user profile (create if missing)
+            let { data: profile } = await supabase
                 .from('profiles')
                 .select('*')
                 .eq('id', authData.user.id)
-                .single()
+                .maybeSingle()
             
-            if (profileError) throw profileError
+            if (!profile) {
+                const meta = authData.user.user_metadata || {}
+                const payload = {
+                  id: authData.user.id,
+                  username: meta.username || null,
+                  email: authData.user.email || null,
+                  first_name: meta.first_name || null,
+                  last_name: meta.last_name || null,
+                  full_name: meta.full_name || [meta.first_name, meta.last_name].filter(Boolean).join(' ') || null,
+                  image_url: meta.image_url || null,
+                  role: 'READER'
+                }
+                const { data: created, error: cErr } = await supabase
+                  .from('profiles')
+                  .insert(payload)
+                  .select()
+                  .maybeSingle()
+                if (cErr) throw cErr
+                profile = created
+            }
             
             return { 
                 user: authData.user, 
@@ -98,8 +117,29 @@ export const userService = {
       .from('profiles')
       .select('*')
       .eq('id', userId)
-      .single()
+      .maybeSingle()
     
+    if (!data) {
+      const { data: authData } = await supabase.auth.getUser()
+      const meta = authData?.user?.user_metadata || {}
+      const payload = {
+        id: userId,
+        username: meta.username || null,
+        email: authData?.user?.email || null,
+        first_name: meta.first_name || null,
+        last_name: meta.last_name || null,
+        full_name: meta.full_name || [meta.first_name, meta.last_name].filter(Boolean).join(' ') || null,
+        image_url: meta.image_url || null,
+        role: 'READER'
+      }
+      const { data: inserted, error: insertErr } = await supabase
+        .from('profiles')
+        .insert(payload)
+        .select()
+        .maybeSingle()
+      if (insertErr) throw insertErr
+      return inserted
+    }
     if (error) throw error
     return data
   },
@@ -325,7 +365,7 @@ export const voteService = {
       .select('*')
       .eq('news_id', voteData.newsId)
       .eq('user_id', voteData.userId)
-      .single()
+      .maybeSingle()
     
     if (existingVote) {
       // Update existing vote
@@ -390,6 +430,32 @@ export const voteService = {
     
     await newsService.updateNewsStatus(newsId, status)
     return status
+  }
+}
+
+// Storage helper
+export const storageService = {
+  async uploadImage(file, options = {}) {
+    const bucket = options.bucket || 'images'
+    const folder = options.folder || 'uploads'
+    const fileExt = file.name?.split('.').pop() || 'jpg'
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`
+    const filePath = `${folder}/${fileName}`
+
+    const { error: uploadError } = await supabase.storage
+      .from(bucket)
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (uploadError) throw uploadError
+
+    const { data } = supabase.storage.from(bucket).getPublicUrl(filePath)
+    return {
+      path: filePath,
+      publicUrl: data.publicUrl
+    }
   }
 }
 

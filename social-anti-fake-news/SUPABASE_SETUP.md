@@ -15,15 +15,18 @@ This guide will help you set up Supabase for the Anti-Fake News System.
 
 ## Step 2: Set Up Database Schema
 
+Use the Postgres-compatible schema for Supabase.
+
 1. In your Supabase dashboard, go to **SQL Editor**
-2. Copy the entire contents of `supabase-schema.sql`
-3. Paste it into the SQL Editor
-4. Click "Run" to execute the schema
-5. Verify tables are created: Go to **Table Editor** and check for:
+2. Open and run `social-anti-fake-news/supabase-schema-postgres.sql`
+3. Click "Run" to execute the schema (it's idempotent)
+4. Verify tables are created: Go to **Table Editor** and check for:
    - `profiles`
    - `news`
    - `comments`
    - `votes`
+
+Note: The older `supabase-schema.sql` file is MySQL-style and not for Supabase. Use `supabase-schema-postgres.sql` instead.
 
 ## Step 3: Get API Credentials
 

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-// Removed java.time.Instant import
 
 /**
  * News entity representing news articles
@@ -46,8 +45,6 @@ public class News extends BaseEntity {
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
 
-    // FIX APPLIED: Removed the conflicting 'private Instant createdAt = Instant.now();'
-    // Timestamps are handled by BaseEntity.
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default

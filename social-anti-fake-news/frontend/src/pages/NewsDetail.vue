@@ -229,11 +229,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import { useRoute, useRouter } from 'vue-router'
 import VoteForm from '../components/VoteForm.vue'
+import { newsService, voteService } from '../services/supabase'
 
 const newsStore = useNewsStore()
 const auth = useAuthStore()
@@ -244,13 +245,50 @@ const showImageModal = ref(false)
 const modalImageUrl = ref('')
 const commentSort = ref('newest')
 
-// Try to get selectedNews from store
+
 let news = newsStore.selectedNews
 
 // If not set, try to load it by ID from route
 if (!news && route.params.id) {
   news = newsStore.newsList.find(n => n.id === Number(route.params.id))
 }
+// Fallback: fetch from Supabase when not in store
+onMounted(async () => {
+  if (!news && route.params.id) {
+    try {
+      const item = await newsService.getNewsById(Number(route.params.id))
+      if (item) {
+        // Map to local shape used by UI
+        const voteCounts = await voteService.getVotes(item.id)
+        news = {
+          id: item.id,
+          title: item.title,
+          image: item.image_url || '/images/placeholder.jpg',
+          status: (item.status || 'UNDECIDED').toLowerCase(),
+          votes: { fake: voteCounts.fake, notFake: voteCounts.notFake },
+          reporter: item.reporter?.full_name || item.reporter?.username || 'Anonymous',
+          reporterId: item.reporter_id,
+          createdAt: item.created_at,
+          fullDetail: item.full_detail,
+          comments: (item.comments || []).filter(c => !c.soft_deleted).map(c => ({
+            id: c.id,
+            author: c.author?.full_name || c.author?.username || 'Anonymous',
+            user: c.author?.username,
+            text: c.text,
+            imageUrl: c.image_url || '',
+            voteType: c.vote_type,
+            createdAt: c.created_at,
+            softDeleted: !!c.soft_deleted
+          }))
+        }
+        // Set as selected for current view
+        newsStore.selectedNews = news
+      }
+    } catch (e) {
+      console.error('Failed to load news detail', e)
+    }
+  }
+})
 
 // Watch for news updates
 const visibleComments = computed(() => {
@@ -346,5 +384,5 @@ function handleCommentImageError(event) {
 </script>
 
 <style scoped>
-/* Custom styles if needed */
+
 </style>

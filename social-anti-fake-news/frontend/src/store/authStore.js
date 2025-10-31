@@ -76,10 +76,16 @@ export const useAuthStore = defineStore('auth', {
                 })
                 
                 if (result.user) {
-                    // Set session and load profile
+                    // Set session
                     this.session = result.session
-                    await this.loadUserProfile(result.user.id)
-                    return { success: true, user: this.user }
+                    // If session exists (auto-confirm), load/create profile now
+                    if (this.session) {
+                        await this.loadUserProfile(result.user.id)
+                        return { success: true, user: this.user }
+                    }
+                    // If session is null (email confirmation required), return success and
+                    // let the user confirm email then log in; profile will be created on first login
+                    return { success: true, user: null }
                 }
                 throw new Error('Registration failed')
             } catch (error) {
