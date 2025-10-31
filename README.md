@@ -1,1 +1,11 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/MVuWO52T)
+Group name DevSpark
+
+
+Team members 
+
+1.Thanachai Naksomboon ID: 662115020 
+2.Wanikkasit ID: 652115043
+
+
+FRONTEND and BACKEND Deploy website 
+https://devsparkantifakenewsii.vercel.app/#/

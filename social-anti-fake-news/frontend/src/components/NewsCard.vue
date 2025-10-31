@@ -1,30 +1,52 @@
 <template>
-  <div 
-    class="card relative cursor-pointer hover:shadow-xl transition p-4 flex flex-col"
-    @click="handleClick(news.id)"
+  <div
+      class="card relative cursor-pointer hover:shadow-xl transition p-4 flex flex-col group bg-white rounded-xl shadow-md border border-gray-100 min-h-[480px]"
+      @click="handleClick(news.id)"
   >
-    <!-- Loader overlay -->
-    <div v-if="loadingId === news.id" class="absolute inset-0 bg-black/50 flex items-center justify-center rounded">
-      <div class="loader border-t-4 border-yellow-400 border-b-4 border-transparent w-8 h-8 rounded-full animate-spin"></div>
+    <div class="relative w-full h-48 overflow-hidden rounded-lg mb-4 flex-shrink-0">
+      <img
+          v-if="news.image"
+          :src="news.image"
+          :alt="news.title || 'news image'"
+          class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          @error="$event.target.src = '/images/placeholder.jpg'"
+      />
+      <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500 rounded-lg">
+        No Image Available
+      </div>
     </div>
 
-    <img 
-      :src="news.imageUrl" 
-      alt="news image" 
-      class="w-full h-44 md:h-52 object-cover rounded mb-3"
-    />
-    <h2 class="text-lg md:text-xl font-semibold mb-1 text-gray-900 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
-    <p class="text-sm md:text-base text-gray-600 flex-1">{{ news.shortDetail }}</p>
-    <div class="mt-2 text-xs md:text-sm text-gray-500 flex justify-between">
-      <span>By {{ news.reporter }}</span>
-      <span>{{ formatDate(news.dateTime) }}</span>
+    <div class="flex flex-col flex-grow justify-between">
+      <div>
+        <!-- BIG, BOLD TITLE -->
+        <h2 class="text-2xl font-extrabold mb-2 text-gray-900 line-clamp-2 hover:text-[#639FFF] transition-colors">{{ news.title }}</h2>
+        <p class="text-sm text-gray-600 line-clamp-3 mb-2">{{ news.shortDetail }}</p>
+      </div>
+
+      <!-- BOLD, BIG, COLORED STATUS + prominent votes -->
+      <div class="flex items-baseline flex-wrap gap-3 mb-2">
+        <span
+          :class="[
+            'uppercase font-extra text-2xl md:text-3xl leading-none',
+            news.status === 'fake' ? 'text-fake' :
+            news.status === 'notFake' ? 'text-real' :
+            'text-undecided'
+          ]"
+        >
+          {{ news.status === 'fake' ? 'FAKE' : news.status === 'notFake' ? 'REAL' : 'UNDECIDED' }}
+        </span>
+        <span class="text-lg md:text-2xl font-extra flex items-center gap-4 ml-1 whitespace-nowrap">
+          <span class="text-fake flex items-center gap-1"><span class="text-lg">🚫</span>{{ (news.votes && news.votes.fake) || 0 }}</span>
+          <span class="text-gray-300">|</span>
+          <span class="text-real flex items-center gap-1"><span class="text-lg">✅</span>{{ (news.votes && news.votes.notFake) || 0 }}</span>
+        </span>
+      </div>
+      <!-- Reporter/Time as before, clean -->
+      <div class="border-t border-gray-100 pt-2 mt-1">
+        <div class="text-xs text-gray-700"><span class="font-semibold">Reporter:</span> {{ news.reporter }}</div>
+        <div class="text-xs text-gray-500"><span class="font-semibold">Time Report:</span> {{ formatDate(news.dateTime) }}</div>
+      </div>
     </div>
-    <span 
-      :class="['mt-3 inline-block px-2.5 py-1.5 text-xs rounded-full font-semibold', 
-      news.status === 'Fake' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700']"
-    >
-      {{ news.status }}
-    </span>
   </div>
 </template>
 
@@ -50,25 +72,31 @@ function handleClick(newsId) {
 }
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })
+  try {
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    }
+    return date.toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' });
+  } catch (e) {
+    return "Invalid Date";
+  }
 }
 </script>
 
 <style scoped>
-.loader {
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 4px;
-  border-top-color: #ffb703;
-  border-right-color: transparent;
-  border-bottom-color: #ffb703;
-  border-left-color: transparent;
-  width: 2rem;
-  height: 2rem;
-  animation: spin 1s linear infinite;
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+
 </style>

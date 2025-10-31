@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
+/* Tailwind v4 theme tokens (enable bg-primary, text-primary, hover:bg-primary/10, etc.) */
+@theme {
+  --color-primary: #639FFF;
+  --color-primary-dark: #4A7DD8;
+}
 /* -----------------------
    Root Variables
 ------------------------ */
@@ -33,11 +36,7 @@
 /* -----------------------
    Global Reset
 ------------------------ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+
 
 html {
   scroll-behavior: smooth;
@@ -52,29 +51,31 @@ body {
 }
 
 /* -----------------------
-   Typography
+   Typography (in Tailwind base layer so utilities override)
 ------------------------ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.5em;
-  transition: color var(--transition-fast);
-}
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5em;
+    transition: color var(--transition-fast);
+  }
 
-p, span, a {
-  font-weight: 400;
-  color: var(--text-secondary);
-}
+  p, a {
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
 
-a:hover { color: var(--accent-hover); }
-a:active { color: var(--accent-active); }
+  a:hover { color: var(--accent-hover); }
+  a:active { color: var(--accent-active); }
+}
 
 /* -----------------------
    Buttons
@@ -246,34 +247,6 @@ textarea:focus {
 /* -----------------------
    Dark Mode Support
 ------------------------ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-soft: #1e293b;
-    --card-bg: #273449;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --accent-hover: #4A86E6;
-    --accent-active: #3D74CC;
-  }
-
-  body {
-    background-color: var(--bg-soft);
-    color: var(--text-primary);
-  }
-
-  .card {
-    background-color: var(--card-bg);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  }
-
-  input[type="text"],
-  input[type="url"],
-  textarea {
-    background-color: #334155;
-    border: 1px solid #475569;
-    color: #f8fafc;
-  }
-}
 
 /* -----------------------
    Enhanced Mobile Responsiveness
@@ -282,21 +255,21 @@ textarea:focus {
   .main-container {
     padding: 1rem;
   }
-  
+
   .card {
     padding: 1rem;
     margin-bottom: 1rem;
   }
-  
+
   h1 { font-size: 1.875rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.25rem; }
-  
+
   button {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
   }
-  
+
   input[type="text"],
   input[type="url"],
   textarea {
@@ -309,11 +282,11 @@ textarea:focus {
   .main-container {
     padding: 0.5rem;
   }
-  
+
   .card {
     padding: 0.75rem;
   }
-  
+
   h1 { font-size: 1.5rem; }
   h2 { font-size: 1.25rem; }
   h3 { font-size: 1.125rem; }
@@ -504,5 +477,27 @@ img:hover {
   transform: scale(1.02);
 }
 
+/* Content images inside prose */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  max-height: 28rem; /* ~448px */
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* General preventive max-height for large banner images */
+img.full-width-banner {
+  width: 100%;
+  max-height: 24rem;
+  object-fit: cover;
+}
+
 /* Removed fixed responsive overrides that constrained all images globally */
+
+/* Strong color helpers (guaranteed with !important) */
+.text-fake { color: #dc2626 !important; }
+.text-real { color: #16a34a !important; }
+.text-undecided { color: #ca8a04 !important; }
+.font-extra { font-weight: 800 !important; }
 

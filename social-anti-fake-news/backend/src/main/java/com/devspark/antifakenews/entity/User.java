@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class User extends BaseEntity {
     @Builder.Default
     private Role role = Role.USER;
 
+
     @OneToMany(mappedBy = "reporter", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<News> news = new ArrayList<>();
@@ -62,6 +64,5 @@ public class User extends BaseEntity {
     private List<Vote> votes = new ArrayList<>();
 
     public enum Role {
-        USER, ADMIN, MODERATOR
-    }
-}
+        READER, ADMIN, USER
+    }}

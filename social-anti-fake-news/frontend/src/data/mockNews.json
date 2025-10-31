@@ -5,13 +5,16 @@
     "shortDetail": "A mysterious light was seen over the Grand Palace.",
     "fullDetail": "Multiple witnesses reported seeing a glowing object descend rapidly over the Grand Palace late in the evening. Residents described unusual movements in the sky and flashes of light that lasted several minutes. Authorities, including the Bangkok Metropolitan Police and the Civil Aviation Authority, investigated the incident and stated that there is no evidence of extraterrestrial activity. Experts suggest the phenomenon could have been caused by a combination of atmospheric reflections and drone lights. Social media posts claiming alien landings quickly went viral, sparking debates online and attracting curiosity seekers to the area.",
     "reporter": "John Doe",
+    "reporterId": 1,
+    "createdAt": "2025-08-20T14:30:00",
     "dateTime": "2025-08-20T14:30:00",
     "status": "fake",
     "image": "/images/image1.jpg",
+    "softDeleted": false,
     "votes": { "fake": 12, "notFake": 3 },
     "comments": [
-      { "user": "Jane", "text": "Looks photoshopped!", "imageUrl": "", "vote": "fake" },
-      { "user": "Somchai", "text": "I was nearby, nothing happened.", "imageUrl": "", "vote": "notFake" }
+      { "id": 101, "author": "Jane", "user": "Jane", "text": "Looks photoshopped!", "imageUrl": "", "vote": "fake", "voteType": "FAKE", "createdAt": "2025-08-20T15:00:00", "softDeleted": false },
+      { "id": 102, "author": "Somchai", "user": "Somchai", "text": "I was nearby, nothing happened.", "imageUrl": "", "vote": "notFake", "voteType": "NOT_FAKE", "createdAt": "2025-08-20T15:30:00", "softDeleted": false }
     ]
   },
   {
@@ -20,12 +23,15 @@
     "shortDetail": "The Chao Phraya River has overflowed.",
     "fullDetail": "Heavy rainfall over the past week has caused the Chao Phraya River to overflow, leading to widespread flooding in several Bangkok suburbs. Emergency services reported that thousands of residents have been evacuated from low-lying areas, and temporary shelters have been established. The flood has disrupted traffic, damaged homes, and affected businesses. Authorities have urged citizens to avoid traveling unless necessary and to follow updates from local disaster management offices. Meteorologists predict that water levels will remain high for the next few days, emphasizing the importance of precautionary measures.",
     "reporter": "Somchai Prasert",
+    "reporterId": 2,
+    "createdAt": "2025-08-19T10:00:00",
     "dateTime": "2025-08-19T10:00:00",
     "status": "notFake",
     "image": "/images/image2.jpg",
+    "softDeleted": false,
     "votes": { "fake": 2, "notFake": 15 },
     "comments": [
-      { "user": "Nok", "text": "My house was flooded yesterday.", "imageUrl": "", "vote": "notFake" }
+      { "id": 201, "author": "Nok", "user": "Nok", "text": "My house was flooded yesterday.", "imageUrl": "", "vote": "notFake", "voteType": "NOT_FAKE", "createdAt": "2025-08-19T11:00:00", "softDeleted": false }
     ]
   },
   {

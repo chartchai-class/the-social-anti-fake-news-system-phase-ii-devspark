@@ -1,57 +1,107 @@
 import { defineStore } from 'pinia'
-import newsData from '../data/mockNews.json'
+import mock from '../data/mockNews.json' // ensure you have this file or replace with empty array
 
 export const useNewsStore = defineStore('news', {
   state: () => ({
-    newsList: newsData,
-    selectedNews: null
+    newsList: (mock || []).map(n => ({...n, softDeleted:false})),
+    selectedNews: null,
+    filter: 'all', // all | fake | notFake | undecided | removed
+    searchQuery: '',
+    perPage: 6,
+    currentPage: 1
   }),
-  actions: {
-    setSelectedNews(id) {
-      this.selectedNews = this.newsList.find(n => n.id === id)
+  getters: {
+    filteredNews(state){
+      let list = state.newsList
+      if(state.filter !== 'removed') list = list.filter(n => !n.softDeleted)
+      if(state.filter === 'fake') list = list.filter(n => n.status === 'fake')
+      if(state.filter === 'notFake') list = list.filter(n => n.status === 'notFake')
+      if(state.filter === 'undecided') list = list.filter(n => n.status === 'undecided')
+      if(state.searchQuery){
+        const q = state.searchQuery.toLowerCase()
+        list = list.filter(n => (n.title + ' ' + (n.shortDetail||'') + ' ' + (n.detail||'')).toLowerCase().includes(q))
+      }
+      return list
     },
-    addComment(newsId, comment) {
-      const news = this.newsList.find(n => n.id === newsId)
-      if (!news.comments) news.comments = []
-      news.comments.push(comment)
+    pagedNews(state){
+      const start = (state.currentPage - 1) * state.perPage
+      return this.filteredNews.slice(start, start + state.perPage)
+    },
+    totalPages(state){ return Math.max(1, Math.ceil(this.filteredNews.length/state.perPage)) }
+  },
+  actions: {
+    setFilter(f){ this.filter = f; this.currentPage = 1 },
+    setSearch(q){ this.searchQuery = q; this.currentPage = 1 },
+    setPerPage(n){ this.perPage = Number(n); this.currentPage = 1 },
+    goPage(n){ this.currentPage = Math.max(1, Math.min(n, this.totalPages)) },
+    setSelectedNews(id){ this.selectedNews = this.newsList.find(x => x.id == id) || null },
 
-      if (this.selectedNews?.id === newsId) {
-        this.selectedNews = { ...news }
+    addNews(payload){
+      const id = payload.id || Date.now()
+      const entry = {
+        id,
+        title: payload.title,
+        shortDetail: payload.shortDetail,
+        detail: payload.detail,
+        image: payload.image || '',
+        reporter: payload.reporterName || 'anonymous',
+        reporterId: payload.reporterId || null,
+        createdAt: payload.createdAt || new Date().toISOString(),
+        votes: payload.votes || { fake:0, notFake:0 },
+        status: (payload.status || 'undecided'),
+        comments: []
+      }
+      this.newsList.unshift(entry)
+      return entry
+    },
+
+    vote(newsId, type){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return
+      n.votes = n.votes || { fake:0, notFake:0 }
+      if(type === 'fake') n.votes.fake = (n.votes.fake||0) + 1
+      if(type === 'notFake') n.votes.notFake = (n.votes.notFake||0) + 1
+      if((n.votes.fake||0) > (n.votes.notFake||0)) n.status = 'fake'
+      else if((n.votes.notFake||0) > (n.votes.fake||0)) n.status = 'notFake'
+      else n.status = 'undecided'
+      if(this.selectedNews?.id == n.id) this.selectedNews = {...n}
+    },
+
+    addComment(newsId, authorName, text, imageUrl = ''){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return
+      n.comments = n.comments || []
+      const comment = { 
+        id: Date.now(), 
+        author: authorName, 
+        user: authorName,
+        text, 
+        imageUrl: imageUrl || '',
+        createdAt: new Date().toISOString(), 
+        softDeleted: false 
+      }
+      n.comments.push(comment)
+      if(this.selectedNews?.id == n.id) {
+        this.selectedNews.comments = [...n.comments]
       }
     },
-    removeComment(newsId, commentIndex) {
-      const news = this.newsList.find(n => n.id === newsId)
-      if (!news) return
-      if (!news.comments) return
-      news.comments.splice(commentIndex, 1)
-      if (this.selectedNews?.id === newsId) this.selectedNews = { ...news }
+
+    adminSoftDeleteNews(newsId){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return false
+      n.softDeleted = true; return true
     },
-    removeNews(newsId) {
-      const idx = this.newsList.findIndex(n => n.id === newsId)
-      if (idx !== -1) this.newsList.splice(idx, 1)
-      if (this.selectedNews?.id === newsId) this.selectedNews = null
+    adminRestoreNews(newsId){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return false
+      n.softDeleted = false; return true
     },
-    vote(newsId, type) {
-  const news = this.newsList.find(n => n.id === newsId)
-  if (!news) return
 
-  if (!news.votes) news.votes = { fake: 0, notFake: 0 }
-
-  if (type === 'fake') news.votes.fake++
-  else news.votes.notFake++
-
-  if (news.votes.fake > news.votes.notFake) {
-    news.status = 'fake'
-  } else if (news.votes.notFake > news.votes.fake) {
-    news.status = 'notFake'
-  } else {
-    news.status = 'undecided'
-  }
-
-  if (this.selectedNews?.id === newsId) {
-    this.selectedNews = { ...news }
-  }
-},
-
+    adminSoftDeleteComment(newsId, commentId){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return false
+      const c = n.comments.find(x => x.id == commentId); if(!c) return false
+      c.softDeleted = true; return true
+    },
+    adminHardDeleteComment(newsId, commentId){
+      const n = this.newsList.find(x => x.id == newsId); if(!n) return false
+      n.comments = n.comments.filter(x => x.id != commentId); return true
+    }
   }
 })
+

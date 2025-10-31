@@ -12,8 +12,7 @@ import java.util.List;
 
 /**
  * News entity representing news articles
- * 
- * @author DevSpark Team
+ * * @author DevSpark Team
  * @version 1.0.0
  */
 @Entity
@@ -46,6 +45,7 @@ public class News extends BaseEntity {
     @JoinColumn(name = "reporter_id", nullable = false)
     private User reporter;
 
+
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Comment> comments = new ArrayList<>();
@@ -61,6 +61,9 @@ public class News extends BaseEntity {
     public enum NewsStatus {
         FAKE, NOT_FAKE, UNDECIDED
     }
+
+    @Builder.Default
+    private boolean softDeleted = false;
 
     @Embeddable
     @Data
