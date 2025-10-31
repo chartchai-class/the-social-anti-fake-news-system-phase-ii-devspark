@@ -131,39 +131,7 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        // Development-only: local admin login without Supabase (for quick testing)
-        devLoginAsAdmin() {
-            this.session = { access_token: 'dev-token', user: { id: 'dev-admin' } }
-            this.user = {
-                id: 'dev-admin',
-                username: 'admin_user',
-                email: 'admin@local',
-                name: 'Admin User',
-                firstName: 'Admin',
-                lastName: 'User',
-                imageUrl: '',
-                role: 'ADMIN'
-            }
-            this.save()
-            return { success: true, user: this.user }
-        },
-
-        // Development-only: local member login
-        devLoginAsMember() {
-            this.session = { access_token: 'dev-token', user: { id: 'dev-member' } }
-            this.user = {
-                id: 'dev-member',
-                username: 'member_user',
-                email: 'member@local',
-                name: 'Member User',
-                firstName: 'Member',
-                lastName: 'User',
-                imageUrl: '',
-                role: 'MEMBER'
-            }
-            this.save()
-            return { success: true, user: this.user }
-        },
+        // dev test logins removed
 
         async loadAllUsers() {
             try {
