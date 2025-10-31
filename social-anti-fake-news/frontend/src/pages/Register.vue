@@ -213,6 +213,7 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
+import { supabase } from '../services/supabase'
 
 const router = useRouter()
 const auth = useAuthStore()
@@ -278,41 +279,64 @@ async function submit() {
     // Validate form
     await registerSchema.validate(form, { abortEarly: false })
     
-    // Check if username already exists
-    const existingUser = auth.users.find(u => 
-      u.username.toLowerCase() === form.username.toLowerCase() ||
-      u.email.toLowerCase() === form.email.toLowerCase()
-    )
+    // Check if username already exists in Supabase
+    const { data: existingUsername } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('username', form.username.toLowerCase().trim())
+      .single()
     
-    if (existingUser) {
-      if (existingUser.username.toLowerCase() === form.username.toLowerCase()) {
-        errors.username = 'Username already taken'
-      } else {
-        errors.email = 'Email already registered'
-      }
+    if (existingUsername) {
+      errors.username = 'Username already taken'
       isSubmitting.value = false
       return
     }
     
-    // Register user
-    const user = auth.registerLocal({
+    // Check if email already exists
+    const { data: existingEmail } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('email', form.email.toLowerCase().trim())
+      .single()
+    
+    if (existingEmail) {
+      errors.email = 'Email already registered'
+      isSubmitting.value = false
+      return
+    }
+    
+    // Register user with Supabase
+    const result = await auth.register({
       username: form.username.trim(),
       email: form.email.trim(),
-      name: `${form.name.trim()} ${form.surname.trim()}`,
-      imageUrl: form.imageUrl.trim() || '/images/avatar-default.png'
+      password: form.password,
+      name: form.name.trim(),
+      surname: form.surname.trim(),
+      imageUrl: form.imageUrl.trim() || ''
     })
     
-    // Success - show notification and redirect
-    alert('✅ Account created successfully! Welcome to our community.')
-    router.push('/')
+    if (result.success) {
+      // Success - show notification and redirect
+      alert('✅ Account created successfully! Please check your email to verify your account.')
+      router.push('/')
+    }
     
   } catch (err) {
     if (err.inner) {
       err.inner.forEach(error => {
         errors[error.path] = error.message
       })
+    } else if (err.message) {
+      // Supabase errors
+      if (err.message.includes('email')) {
+        errors.email = 'Email is already registered'
+      } else if (err.message.includes('password')) {
+        errors.password = 'Password does not meet requirements'
+      } else {
+        errors.general = err.message || 'Registration failed. Please try again.'
+      }
     } else {
-      errors.general = err.message || 'Validation failed'
+      errors.general = 'Validation failed. Please check your input.'
     }
   } finally {
     isSubmitting.value = false
