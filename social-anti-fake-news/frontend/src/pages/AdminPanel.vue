@@ -323,7 +323,6 @@
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../store/authStore'
 import { useNewsStore } from '../store/newsStore'
-import { newsService } from '../services/supabase'
 
     const auth = useAuthStore()
 const newsStore = useNewsStore()
@@ -411,21 +410,15 @@ function downgradeToReader(id) {
   }
 }
 
-async function toggleRemoveNews(news) {
-  try {
-    if (news.softDeleted) {
-      if (!confirm(`Restore this news article?\n\n"${news.title}"\n\nIt will become visible to all users again.`)) return
-      await newsService.restoreNews(news.id)
-      newsStore.adminRestoreNews(news.id)
-      alert('✅ News article restored successfully!')
-    } else {
-      if (!confirm(`⚠️ Remove this news article?\n\n"${news.title}"\n\nRegular users will no longer see this article. Only admins can view it.`)) return
-      await newsService.softDeleteNews(news.id)
-      newsStore.adminSoftDeleteNews(news.id)
-      alert('✅ News article removed successfully!')
-    }
-  } catch (e) {
-    alert('❌ Failed to update news status: ' + (e.message || e))
+function toggleRemoveNews(news) {
+  if (news.softDeleted) {
+    if (!confirm(`Restore this news article?\n\n"${news.title}"\n\nIt will become visible to all users again.`)) return
+    newsStore.adminRestoreNews(news.id)
+    alert('✅ News article restored successfully!')
+  } else {
+    if (!confirm(`⚠️ Remove this news article?\n\n"${news.title}"\n\nRegular users will no longer see this article. Only admins can view it.`)) return
+    newsStore.adminSoftDeleteNews(news.id)
+    alert('✅ News article removed successfully!')
   }
 }
 
@@ -471,5 +464,5 @@ function formatDate(dateStr) {
 </script>
 
 <style scoped>
-
+/* Additional custom styles if needed */
 </style>
