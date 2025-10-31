@@ -286,12 +286,15 @@ async function submitNews() {
 
     // Optimistically sync to local store for immediate UI update
     newsStore.addNews({
+      id: created.id,
       title: created.title,
       shortDetail: created.short_detail,
       detail: created.full_detail,
       image: created.image_url || '/images/placeholder.jpg',
       reporterName: auth.user?.name || 'Anonymous',
-      reporterId: created.reporter_id
+      reporterId: created.reporter_id,
+      createdAt: created.created_at,
+      status: (created.status || 'UNDECIDED').toLowerCase()
     })
     
     alert('✅ News article submitted successfully!')

@@ -37,7 +37,7 @@ export const useNewsStore = defineStore('news', {
     setSelectedNews(id){ this.selectedNews = this.newsList.find(x => x.id == id) || null },
 
     addNews(payload){
-      const id = Date.now()
+      const id = payload.id || Date.now()
       const entry = {
         id,
         title: payload.title,
@@ -46,9 +46,9 @@ export const useNewsStore = defineStore('news', {
         image: payload.image || '',
         reporter: payload.reporterName || 'anonymous',
         reporterId: payload.reporterId || null,
-        createdAt: new Date().toISOString(),
-        votes: { fake:0, notFake:0 },
-        status: 'undecided',
+        createdAt: payload.createdAt || new Date().toISOString(),
+        votes: payload.votes || { fake:0, notFake:0 },
+        status: (payload.status || 'undecided'),
         comments: []
       }
       this.newsList.unshift(entry)

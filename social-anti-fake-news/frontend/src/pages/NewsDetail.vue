@@ -250,7 +250,7 @@ let news = newsStore.selectedNews
 
 // If not set, try to load it by ID from route
 if (!news && route.params.id) {
-  news = newsStore.newsList.find(n => n.id === Number(route.params.id))
+  news = newsStore.newsList.find(n => String(n.id) === String(route.params.id))
 }
 // Fallback: fetch from Supabase when not in store
 onMounted(async () => {
