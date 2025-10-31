@@ -247,34 +247,6 @@ textarea:focus {
 /* -----------------------
    Dark Mode Support
 ------------------------ */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-soft: #1e293b;
-    --card-bg: #273449;
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --accent-hover: #4A86E6;
-    --accent-active: #3D74CC;
-  }
-
-  body {
-    background-color: var(--bg-soft);
-    color: var(--text-primary);
-  }
-
-  .card {
-    background-color: var(--card-bg);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-  }
-
-  input[type="text"],
-  input[type="url"],
-  textarea {
-    background-color: #334155;
-    border: 1px solid #475569;
-    color: #f8fafc;
-  }
-}
 
 /* -----------------------
    Enhanced Mobile Responsiveness

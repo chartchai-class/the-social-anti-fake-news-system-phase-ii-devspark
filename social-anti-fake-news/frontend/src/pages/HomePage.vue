@@ -208,20 +208,27 @@ const filterOptions = [
 const fakeNewsCount = computed(() => store.newsList.filter(n => n.status === 'fake').length)
 const realNewsCount = computed(() => store.newsList.filter(n => n.status === 'notFake').length)
 
-// Search & Filter
+// Search & Filter - Enhanced to search by topic, detail, reporter, and status
 const searchedNews = computed(() => {
-  if (!searchQuery.value.trim()) return store.newsList
+  if (!searchQuery.value.trim()) return store.newsList.filter(n => !n.softDeleted)
   const query = searchQuery.value.toLowerCase()
-  return store.newsList.filter(news =>
+  return store.newsList.filter(news => {
+    if (news.softDeleted) return false
+    return (
       news.title.toLowerCase().includes(query) ||
-      news.shortDetail.toLowerCase().includes(query) ||
-      news.fullDetail.toLowerCase().includes(query) ||
-      news.reporter.toLowerCase().includes(query)
-  )
+      news.shortDetail?.toLowerCase().includes(query) ||
+      news.fullDetail?.toLowerCase().includes(query) ||
+      news.reporter?.toLowerCase().includes(query) ||
+      (news.status && news.status.toLowerCase() === query) ||
+      (query === 'fake' && news.status === 'fake') ||
+      (query === 'real' && news.status === 'notFake') ||
+      (query === 'undecided' && news.status === 'undecided')
+    )
+  })
 })
 
 const filteredNews = computed(() => {
-  let list = searchedNews.value
+  let list = searchedNews.value.filter(n => !n.softDeleted)
   if (filter.value !== 'all') list = list.filter(n => n.status === filter.value)
   if ((route.query.me === '1' || route.query.me === 'true') && auth.user?.id) {
     list = list.filter(n => n.reporterId === auth.user.id)

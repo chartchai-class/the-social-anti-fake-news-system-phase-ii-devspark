@@ -5,8 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44cabe94-e193-4415-81b3-113bf83fb2d0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/CommentMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/CommentMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/NewsMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/NewsMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/UserMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/backend/target/generated-sources/annotations/com/devspark/antifakenews/mapper/UserMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/components/VoteForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/components/VoteForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/data/mockNews.json" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/data/mockNews.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/AddNews.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/AddNews.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/AdminPanel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/AdminPanel.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/HomePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/HomePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/NewsDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/NewsDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/Statistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/Statistics.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/UserDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/pages/UserDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/authStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/authStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/newsStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/store/newsStore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/src/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-anti-fake-news/frontend/vercel.json" beforeDir="false" afterPath="$PROJECT_DIR$/social-anti-fake-news/frontend/vercel.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,6 +116,7 @@
       <workItem from="1761732183366" duration="16276000" />
       <workItem from="1761810167441" duration="3323000" />
       <workItem from="1761817854046" duration="7567000" />
+      <workItem from="1761876044894" duration="1102000" />
     </task>
     <servers />
   </component>

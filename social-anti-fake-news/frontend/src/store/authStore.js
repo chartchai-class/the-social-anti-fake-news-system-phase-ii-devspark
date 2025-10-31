@@ -62,6 +62,8 @@ export const useAuthStore = defineStore('auth', {
             const u = this.users.find(x => x.id === Number(id)); if(!u) return null
             u.role = 'READER'; this.save(); return u
         },
+        upgradeUserToMember(id){ return this.upgradeToMember(id) },
+        upgradeUserToAdmin(id){ return this.upgradeToAdmin(id) },
         findUserById(id){ return this.users.find(x => x.id == id) || null }
     }
 })

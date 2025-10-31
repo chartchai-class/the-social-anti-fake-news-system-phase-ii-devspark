@@ -66,10 +66,22 @@ export const useNewsStore = defineStore('news', {
       if(this.selectedNews?.id == n.id) this.selectedNews = {...n}
     },
 
-    addComment(newsId, authorName, text){
+    addComment(newsId, authorName, text, imageUrl = ''){
       const n = this.newsList.find(x => x.id == newsId); if(!n) return
       n.comments = n.comments || []
-      n.comments.push({ id: Date.now(), author: authorName, text, createdAt: new Date().toISOString(), softDeleted:false })
+      const comment = { 
+        id: Date.now(), 
+        author: authorName, 
+        user: authorName,
+        text, 
+        imageUrl: imageUrl || '',
+        createdAt: new Date().toISOString(), 
+        softDeleted: false 
+      }
+      n.comments.push(comment)
+      if(this.selectedNews?.id == n.id) {
+        this.selectedNews.comments = [...n.comments]
+      }
     },
 
     adminSoftDeleteNews(newsId){
