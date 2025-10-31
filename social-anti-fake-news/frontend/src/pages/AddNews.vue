@@ -187,6 +187,7 @@ import { useRouter } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
+import { newsService } from '../services/supabase'
 
 const router = useRouter()
 const newsStore = useNewsStore()
@@ -243,17 +244,25 @@ async function submitNews() {
     // Validate form
     await newsSchema.validate(form, { abortEarly: false })
     
-    // Submit news
-    newsStore.addNews({
+    // Persist to Supabase
+    const created = await newsService.createNews({
       title: form.title.trim(),
       shortDetail: form.shortDetail.trim(),
       detail: form.detail.trim(),
       image: form.image.trim() || '/images/placeholder.jpg',
+      reporterId: auth.user?.id
+    })
+
+    // Optimistically sync to local store for immediate UI update
+    newsStore.addNews({
+      title: created.title,
+      shortDetail: created.short_detail,
+      detail: created.full_detail,
+      image: created.image_url || '/images/placeholder.jpg',
       reporterName: auth.user?.name || 'Anonymous',
-      reporterId: auth.user?.id || null
+      reporterId: created.reporter_id
     })
     
-    // Success
     alert('✅ News article submitted successfully!')
     
     // Reset form
@@ -262,7 +271,6 @@ async function submitNews() {
     form.detail = ''
     form.image = ''
     
-    // Redirect to home
     router.push('/')
     
   } catch (err) {
@@ -284,5 +292,5 @@ function handleImageError(event) {
 </script>
 
 <style scoped>
-/* Additional custom styles if needed */
+
 </style>

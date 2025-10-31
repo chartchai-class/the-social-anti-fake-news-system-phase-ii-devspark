@@ -163,6 +163,7 @@ import { ref, reactive } from 'vue'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
+import { voteService, commentService } from '../services/supabase'
 
 const newsStore = useNewsStore()
 const auth = useAuthStore()
@@ -209,20 +210,43 @@ async function submitVote() {
   try {
     // Validate form
     await voteSchema.validate(form, { abortEarly: false })
-    
-    // Submit vote
+
+    if (!auth.isLoggedIn) {
+      errors.general = 'Please login to submit your opinion.'
+      isSubmitting.value = false
+      return
+    }
+
+    // Persist vote and comment to Supabase
+    await voteService.submitVote({
+      newsId: props.newsId,
+      userId: auth.user.id,
+      voteType: form.voteType === 'fake' ? 'FAKE' : 'NOT_FAKE'
+    })
+
+    await commentService.createComment({
+      newsId: props.newsId,
+      userId: auth.user.id,
+      text: form.commentText.trim(),
+      imageUrl: form.imageUrl.trim() || null,
+      voteType: form.voteType === 'fake' ? 'FAKE' : 'NOT_FAKE'
+    })
+
+    // Update local store to keep UI responsive
     newsStore.vote(props.newsId, form.voteType)
-    
-    // Submit comment
-    newsStore.addComment(props.newsId, form.userName.trim() || auth.user?.name || 'Anonymous', form.commentText.trim(), form.imageUrl.trim())
-    
-    // Success - reset form
+    newsStore.addComment(
+      props.newsId,
+      form.userName.trim() || auth.user?.name || 'Anonymous',
+      form.commentText.trim(),
+      form.imageUrl.trim()
+    )
+
+    // Reset form
     form.voteType = ''
     form.userName = ''
     form.commentText = ''
     form.imageUrl = ''
-    
-    // Show success (you could use a toast notification here)
+
     alert('✅ Your opinion has been submitted successfully!')
     
   } catch (err) {
@@ -244,5 +268,5 @@ function handleImageError(event) {
 </script>
 
 <style scoped>
-/* Additional custom styles if needed */
+
 </style>
