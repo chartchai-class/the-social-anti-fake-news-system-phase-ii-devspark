@@ -78,11 +78,19 @@
           </div>
 
           <button
+              v-if="auth.isMember || auth.isAdmin"
               @click="goToAddNews"
               class="px-5 py-2 bg-gradient-to-r from-green-600 to-blue-600 text-white font-semibold rounded-full shadow-md hover:opacity-90 transition-all duration-200"
           >
             ➕ Add News
           </button>
+          <router-link
+              v-else
+              to="/register"
+              class="px-5 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 transition-colors"
+          >
+            Register to Post
+          </router-link>
         </div>
       </div>
 
@@ -168,8 +176,9 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
+import { useAuthStore } from '../store/authStore'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import NewsCard from '../components/NewsCard.vue'
@@ -179,6 +188,8 @@ NProgress.configure({ showSpinner: false, speed: 500, minimum: 0.1 })
 
 const store = useNewsStore()
 const router = useRouter()
+const route = useRoute()
+const auth = useAuthStore()
 
 const filter = ref('all')
 const searchQuery = ref('')
@@ -197,21 +208,32 @@ const filterOptions = [
 const fakeNewsCount = computed(() => store.newsList.filter(n => n.status === 'fake').length)
 const realNewsCount = computed(() => store.newsList.filter(n => n.status === 'notFake').length)
 
-// Search & Filter
+// Search & Filter - Enhanced to search by topic, detail, reporter, and status
 const searchedNews = computed(() => {
-  if (!searchQuery.value.trim()) return store.newsList
+  if (!searchQuery.value.trim()) return store.newsList.filter(n => !n.softDeleted)
   const query = searchQuery.value.toLowerCase()
-  return store.newsList.filter(news =>
+  return store.newsList.filter(news => {
+    if (news.softDeleted) return false
+    return (
       news.title.toLowerCase().includes(query) ||
-      news.shortDetail.toLowerCase().includes(query) ||
-      news.fullDetail.toLowerCase().includes(query) ||
-      news.reporter.toLowerCase().includes(query)
-  )
+      news.shortDetail?.toLowerCase().includes(query) ||
+      news.fullDetail?.toLowerCase().includes(query) ||
+      news.reporter?.toLowerCase().includes(query) ||
+      (news.status && news.status.toLowerCase() === query) ||
+      (query === 'fake' && news.status === 'fake') ||
+      (query === 'real' && news.status === 'notFake') ||
+      (query === 'undecided' && news.status === 'undecided')
+    )
+  })
 })
 
 const filteredNews = computed(() => {
-  if (filter.value === 'all') return searchedNews.value
-  return searchedNews.value.filter(n => n.status === filter.value)
+  let list = searchedNews.value.filter(n => !n.softDeleted)
+  if (filter.value !== 'all') list = list.filter(n => n.status === filter.value)
+  if ((route.query.me === '1' || route.query.me === 'true') && auth.user?.id) {
+    list = list.filter(n => n.reporterId === auth.user.id)
+  }
+  return list
 })
 
 const totalPages = computed(() => Math.ceil(filteredNews.value.length / itemsPerPage.value))
