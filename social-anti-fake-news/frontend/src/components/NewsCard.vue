@@ -27,7 +27,7 @@
       <div class="flex items-baseline flex-wrap gap-3 mb-2">
         <span
           :class="[
-            'uppercase font-extra text-4xl md:text-5xl leading-none',
+            'uppercase font-extra text-2xl md:text-3xl leading-none',
             news.status === 'fake' ? 'text-fake' :
             news.status === 'notFake' ? 'text-real' :
             'text-undecided'

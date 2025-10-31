@@ -202,7 +202,7 @@ import { useRouter } from 'vue-router'
 import { useNewsStore } from '../store/newsStore'
 import { useAuthStore } from '../store/authStore'
 import * as yup from 'yup'
-import { newsService, storageService } from '../services/supabase'
+// Local add only; list still fetched from Supabase on Home
 
 const router = useRouter()
 const newsStore = useNewsStore()
@@ -212,7 +212,6 @@ const isSubmitting = ref(false)
 const errors = reactive({})
 const selectedFile = ref(null)
 const selectedFileName = ref('')
-const uploadError = ref('')
 
 const form = reactive({
   title: '',
@@ -249,7 +248,6 @@ const newsSchema = yup.object({
 async function submitNews() {
   // Clear previous errors
   Object.keys(errors).forEach(key => delete errors[key])
-  uploadError.value = ''
   
   // Check permissions
   if (!auth.isMember && !auth.isAdmin) {
@@ -263,38 +261,19 @@ async function submitNews() {
     // Validate form
     await newsSchema.validate(form, { abortEarly: false })
     
-    // If a file was selected, upload to Supabase Storage and use its public URL
+    // Local-only create; keep DB reads elsewhere
     let imageUrl = form.image.trim()
     if (selectedFile.value) {
-      try {
-        const { publicUrl } = await storageService.uploadImage(selectedFile.value, { bucket: 'images', folder: 'news' })
-        imageUrl = publicUrl
-      } catch (e) {
-        uploadError.value = e.message || 'Image upload failed'
-        throw e
-      }
+      imageUrl = await readFileAsDataURL(selectedFile.value)
     }
-
-    // Persist to Supabase
-    const created = await newsService.createNews({
+    newsStore.addNews({
       title: form.title.trim(),
       shortDetail: form.shortDetail.trim(),
       detail: form.detail.trim(),
       image: imageUrl || '/images/placeholder.jpg',
-      reporterId: auth.user?.id
-    })
-
-    // Optimistically sync to local store for immediate UI update
-    newsStore.addNews({
-      id: created.id,
-      title: created.title,
-      shortDetail: created.short_detail,
-      detail: created.full_detail,
-      image: created.image_url || '/images/placeholder.jpg',
       reporterName: auth.user?.name || 'Anonymous',
-      reporterId: created.reporter_id,
-      createdAt: created.created_at,
-      status: (created.status || 'UNDECIDED').toLowerCase()
+      reporterId: auth.user?.id || null,
+      status: 'undecided'
     })
     
     alert('✅ News article submitted successfully!')
@@ -335,6 +314,15 @@ function onFileChange(e) {
     selectedFile.value = null
     selectedFileName.value = ''
   }
+}
+
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
 }
 </script>
 

@@ -29,7 +29,7 @@
         <div class="flex flex-col items-center gap-4 mt-6 px-6">
           <div class="flex items-center gap-4 flex-wrap justify-center">
             <span :class="[
-              'px-6 py-3 rounded-full uppercase font-bold text-lg',
+              'px-5 py-2 rounded-full uppercase font-semibold text-base',
               news.status === 'fake' ? 'bg-red-100 text-red-700' :
               news.status === 'notFake' ? 'bg-green-100 text-green-700' :
               'bg-yellow-100 text-yellow-700'
