@@ -72,27 +72,22 @@
             </button>
           </form>
 
-          <!-- Demo Users (for development/testing) -->
+          <!-- Quick Test Login -->
           <div class="mt-6 pt-6 border-t border-gray-200">
-            <p class="text-sm text-gray-600 mb-4 text-center">Quick Demo Login:</p>
-            <div class="grid grid-cols-3 gap-2">
-              <button 
-                @click="quickLogin('admin@demo.com', 'admin123')"
-                class="px-3 py-2 text-xs bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-lg transition-colors"
+            <p class="text-sm text-gray-600 mb-4 text-center">Quick Test Login (Secret Key)</p>
+            <div class="flex items-center justify-center gap-3 flex-wrap">
+              <!-- Dev buttons requiring secret key 'devspark' -->
+              <button
+                @click="testDev('admin')"
+                class="px-4 py-2 text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 rounded-lg transition-colors"
               >
-                Admin
+                Test Admin (secret key)
               </button>
-              <button 
-                @click="quickLogin('member@demo.com', 'member123')"
-                class="px-3 py-2 text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-lg transition-colors"
+              <button
+                @click="testDev('member')"
+                class="px-4 py-2 text-xs bg-green-100 hover:bg-green-200 text-green-700 rounded-lg transition-colors"
               >
-                Member
-              </button>
-              <button 
-                @click="quickLogin('reader@demo.com', 'reader123')"
-                class="px-3 py-2 text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
-              >
-                Reader
+                Test Member (secret key)
               </button>
             </div>
           </div>
@@ -146,9 +141,21 @@ async function login() {
   isSubmitting.value = true
   
   try {
-    // Validate form
+    // Local dev overrides (skip validation)
+    if (form.email.trim() === 'admin' && form.password === 'admin') {
+      const res = auth.devLoginAsAdmin()
+      if (res.success) { router.push('/') }
+      return
+    }
+    if (form.email.trim() === 'member' && form.password === 'member') {
+      const res = auth.devLoginAsMember()
+      if (res.success) { router.push('/') }
+      return
+    }
+
+    // Validate form for normal Supabase login (email must contain @)
     await loginSchema.validate(form, { abortEarly: false })
-    
+
     // Login with Supabase
     const result = await auth.login(form.email.trim(), form.password)
     
@@ -179,10 +186,16 @@ async function login() {
   }
 }
 
-function quickLogin(email, password) {
-  form.email = email
-  form.password = password
-  login()
+function testDev(role){
+  const key = window.prompt('Enter secret key to continue:')
+  if ((key || '').trim() !== 'devspark') { return }
+  if (role === 'admin') {
+    const res = auth.devLoginAsAdmin()
+    if (res.success) router.push('/')
+  } else {
+    const res = auth.devLoginAsMember()
+    if (res.success) router.push('/')
+  }
 }
 </script>
 
