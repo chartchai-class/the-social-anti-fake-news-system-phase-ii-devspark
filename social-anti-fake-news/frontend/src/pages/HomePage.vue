@@ -86,10 +86,10 @@
           </button>
           <router-link
               v-else
-              to="/register"
+              to="/"
               class="px-5 py-2 rounded-full border border-primary/30 bg-white text-gray-700 hover:bg-primary/10 transition-colors"
           >
-            Register to Post
+            Only Member and Admin can post
           </router-link>
         </div>
       </div>
